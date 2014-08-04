@@ -2,8 +2,6 @@ package be.kdg.views;
 
 import java.sql.*;
 
-// TEST KLASSE
-
 public class Console
 {
     public static void main(String[] args)
