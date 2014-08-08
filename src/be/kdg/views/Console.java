@@ -7,9 +7,7 @@ public class Console
 {
     public static void main(String[] args)
     {
-        voegSociaalBerichtToeAanBepaaldeFilm();
-
-        String bioscoop = "Kinepolis Brussel";
+        String bioscoop = "Kinepolis Antwerpen";
         Date startDatum = Date.valueOf(LocalDate.of(2014, 8, 1));
         Date eindDatum = Date.valueOf(LocalDate.of(2014, 8, 31));
 
@@ -35,24 +33,11 @@ public class Console
         }
     }
 
-    private static void voegSociaalBerichtToeAanBepaaldeFilm()
-    {
-        try
-        {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bioscoop", "root", "Iam4life");
-            Statement stmt = con.createStatement();
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
     private static ResultSet vertoningenVoorBioscoopTussenTweeDatums(String bioscoop, Date startDatum, Date eindDatum)
     {
         try
         {
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bioscoop", "root", "Iam4life");
+            Connection con = DriverManager.getConnection("jdbc:mysql://192.168.20.200:3306/bioscoop", "root", "root");
 
             PreparedStatement stmt = con.prepareStatement(
                 "SELECT bioscoop.naam, zaal.zaalNr, film.naam " +
@@ -60,8 +45,7 @@ public class Console
                 "INNER JOIN film ON programmatie.filmId = film.id " +
                 "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
                 "INNER JOIN bioscoop ON zaal.bioscoopId = bioscoop.id " +
-                "WHERE bioscoop.naam = ? " +
-                "AND programmatie.datum BETWEEN ? AND ?"
+                "WHERE bioscoop.naam = ? AND programmatie.datum BETWEEN ? AND ?"
             );
 
             stmt.setString(1, bioscoop);
