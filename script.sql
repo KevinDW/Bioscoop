@@ -168,7 +168,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `bioscoop`.`social`
 -- -----------------------------------------------------
-CREATE TABLE `bioscoop`.`social` (
+CREATE TABLE IF NOT EXISTS `bioscoop`.`social` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `datum` DATETIME NULL,
   `type` VARCHAR(45) NULL,
