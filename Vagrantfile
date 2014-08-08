@@ -30,24 +30,8 @@ Vagrant.configure("2") do |config|
 
   end
 
-  ####
-  # Base Items
-  ##########
-
-  # Provision Base Packages
   config.vm.provision "shell", path: "#{github_url}/scripts/base.sh", args: [github_url, server_swap]
-
-  ####
-  # Databases
-  ##########
-
-  # Provision MySQL
   config.vm.provision "shell", path: "#{github_url}/scripts/mysql.sh", args: [mysql_root_password, mysql_version, mysql_enable_remote]
-
-  ####
-  # Local Scripts
-  ##########
-
-  # config.vm.provision "shell", path: "./local-script.sh"
+  config.vm.provision "shell", path: "./Database.sh"
 
 end
