@@ -5,8 +5,6 @@ server_ip = "192.168.20.200"
 server_memory = "384"
 server_swap  = "768"
 
-hostname = "bioscoop.dev"
-
 mysql_root_password = "root"
 mysql_version = "5.5"
 mysql_enable_remote = "true"
@@ -17,7 +15,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision "shell", inline: "echo setting timezone to #{server_timezone}; ln -sf /usr/share/zoneinfo/#{server_timezone} /etc/localtime"
 
-  config.vm.hostname = hostname
   config.vm.network :private_network, ip: server_ip
   config.vm.synced_folder ".", "/vagrant", id: "core"
 
