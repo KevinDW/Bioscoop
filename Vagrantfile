@@ -2,8 +2,6 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/trusty64"
 
-  config.vm.provision "shell", inline: "ln -sf /usr/share/zoneinfo/Europe/Brussels /etc/localtime"
-
   config.vm.network :private_network, ip: "192.168.20.200"
   config.vm.synced_folder ".", "/vagrant", id: "core"
 
