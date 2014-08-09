@@ -1,5 +1,3 @@
-package be.kdg.views;
-
 import java.sql.*;
 import java.time.LocalDate;
 
