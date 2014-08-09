@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 sudo apt-get update
-sudo apt-get install -qq curl unzip  ack-grep
+sudo apt-get install -qq curl unzip ack-grep default-jre
 
 shopt -s nocasematch
 
