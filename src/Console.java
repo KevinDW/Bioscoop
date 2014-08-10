@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.time.LocalDate;
 
 public class Console
 {
@@ -6,7 +7,11 @@ public class Console
     {
         try
         {
-            vertoningenInBioscoopTussenTweeDatums("Kinepolis Antwerpen", new Date(2014, 8, 1), new Date(2014, 8, 31));
+            String bioscoop = "Kinepolis Antwerpen";
+            LocalDate startDatum = LocalDate.of(2014, 8, 1);
+            LocalDate eindDatum = LocalDate.of(2014, 8, 31);
+
+            vertoningenInBioscoopTussenTweeDatums(bioscoop, Date.valueOf(startDatum), Date.valueOf(eindDatum));
         }
         catch (SQLException e)
         {
@@ -19,7 +24,7 @@ public class Console
         Connection con = DriverManager.getConnection("jdbc:mysql://192.168.20.200:3306/bioscoop", "root", "root");
 
         PreparedStatement stmt = con.prepareStatement(
-            "SELECT bioscoop.naam, zaal.zaalNr, film.naam " +
+            "SELECT zaal.zaalNr, film.naam " +
             "FROM programmatie " +
             "INNER JOIN film ON programmatie.filmId = film.id " +
             "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
@@ -33,12 +38,11 @@ public class Console
 
         ResultSet rs = stmt.executeQuery();
 
-        System.out.println("Bioscoop\t\t\tZaal\tFilm");
-        System.out.println("==================================");
+        System.out.printf("Bioscoop: %s\n\n", bioscoop);
 
         while(rs.next())
         {
-            System.out.printf("%s\t%d\t\t%s\n", rs.getString("bioscoop.naam"), rs.getInt("zaal.zaalNr"), rs.getString("film.naam"));
+            System.out.printf("%d %s\n", rs.getInt("zaal.zaalNr"), rs.getString("film.naam"));
         }
     }
 }
