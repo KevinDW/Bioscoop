@@ -11,7 +11,5 @@ mysql -uroot -proot -e "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH
 
 service mysql restart
 
-cd /vagrant
-
-mysql -uroot -proot < CreateDB.sql
-mysql -uroot -proot bioscoop < InsertDB.sql
+mysql -uroot -proot < /vagrant/sql/CreateDB.sql
+mysql -uroot -proot bioscoop < /vagrant/sql/InsertDB.sql

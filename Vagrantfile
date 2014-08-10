@@ -14,8 +14,8 @@ Vagrant.configure("2") do |config|
 
   end
 
-  config.vm.provision "shell", path: "./Base.sh"
-  config.vm.provision "shell", path: "./MySQL.sh"
-  config.vm.provision "shell", path: "./ActiveMQ.sh"
+  config.vm.provision "shell", path: "./sh/Base.sh"
+  config.vm.provision "shell", path: "./sh/MySQL.sh"
+  config.vm.provision "shell", path: "./sh/ActiveMQ.sh"
 
 end
