@@ -16,6 +16,8 @@ public class Console
         catch (SQLException e)
         {
             e.printStackTrace();
+            System.out.println("SQLState: " + e.getSQLState());
+            System.out.println("Error code: " + e.getErrorCode());
         }
     }
 
