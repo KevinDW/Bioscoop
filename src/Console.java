@@ -46,5 +46,9 @@ public class Console
         {
             System.out.printf("%d %s\n", rs.getInt("zaal.zaalNr"), rs.getString("film.naam"));
         }
+
+        rs.close();
+        stmt.close();
+        con.close();
     }
 }
