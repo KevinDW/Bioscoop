@@ -31,7 +31,7 @@ INSERT INTO restrictie(naam) VALUES(9);
 INSERT INTO restrictie(naam) VALUES(12);
 INSERT INTO restrictie(naam) VALUES(16);
 INSERT INTO restrictie(naam) VALUES(18);
-INSERT INTO restrictie(naam) VALUES(ALL);
+INSERT INTO restrictie(naam) VALUES("ALL");
 
 -- -----------------------------------------------------
 -- Table film
