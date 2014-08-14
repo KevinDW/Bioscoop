@@ -1,3 +1,5 @@
+package be.bioscoop.queues;
+
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;

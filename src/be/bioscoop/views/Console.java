@@ -1,3 +1,5 @@
+package be.bioscoop.views;
+
 import java.sql.*;
 import java.time.LocalDate;
 
