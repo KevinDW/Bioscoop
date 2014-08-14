@@ -4,9 +4,10 @@ import javax.jms.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class Sender {
-    public static void main(String[] args) throws JMSException {
-
+public class Sender
+{
+    public static void main(String[] args) throws JMSException
+    {
         //Create a ConnectionFactory
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://192.168.20.120:61616");
 
@@ -27,25 +28,27 @@ public class Sender {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
         String message;
-
         Boolean exit = false;
 
-        while (exit == false){
-            try{
+        while (!exit)
+        {
+            try
+            {
                 System.out.println("Test");
+                message = bufferedReader.readLine();
 
-            message = bufferedReader.readLine();
-            if (message=="exit"){
-                exit = true;
+                if (message.equalsIgnoreCase("exit"))
+                {
+                    exit = true;
+                }
+
+                TextMessage textMessage = session.createTextMessage(message);
+                producer.send(textMessage);
             }
-            TextMessage textMessage = session.createTextMessage(message);
-            producer.send(textMessage);
-            } catch (Exception e){
+            catch (Exception e)
+            {
                 e.getMessage();
             }
         }
-
-
-
     }
 }
