@@ -1,6 +1,8 @@
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 public class Sender {
     public static void main(String[] args) throws JMSException {
@@ -21,6 +23,27 @@ public class Sender {
         //Create a MessageProducer for the Destination
         MessageProducer producer = session.createProducer(destination);
         producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        String message;
+
+        Boolean exit = false;
+
+        while (exit == false){
+            try{
+                System.out.println("Test");
+
+            message = bufferedReader.readLine();
+            if (message=="exit"){
+                exit = true;
+            }
+            TextMessage textMessage = session.createTextMessage(message);
+            producer.send(textMessage);
+            } catch (Exception e){
+                e.getMessage();
+            }
+        }
 
 
 
