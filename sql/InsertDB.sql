@@ -60,4 +60,26 @@ INSERT INTO barcode(code,gebruikt) VALUES('201408042000LUCY0807',1);
 INSERT INTO barcode(code,gebruikt) VALUES('201408042000LUCY2603',1);
 INSERT INTO barcode(code,gebruikt) VALUES('201408042000LUCY2604',1);
 
+-- -----------------------------------------------------
+-- Table ticket
+-- -----------------------------------------------------
+
+INSERT INTO ticket(prijs,programmatieId,barcodeId) VALUES(9,1,1);
+INSERT INTO ticket(prijs,programmatieId,barcodeId) VALUES(9,2,2);
+INSERT INTO ticket(prijs,programmatieId,barcodeId) VALUES(9,3,3);
+INSERT INTO ticket(prijs,programmatieId,barcodeId) VALUES(9,1,4);
+INSERT INTO ticket(prijs,programmatieId,barcodeId) VALUES(9,1,5);
+INSERT INTO ticket(prijs,programmatieId,barcodeId) VALUES(9,1,6);
+INSERT INTO ticket(prijs,programmatieId,barcodeId) VALUES(8,4,7);
+INSERT INTO ticket(prijs,programmatieId,barcodeId) VALUES(8,4,8);
+
+-- -----------------------------------------------------
+-- Table klant
+-- -----------------------------------------------------
+
+INSERT INTO klant(naam,email) VALUES("Jos Vermeulen","jos.vermeulen@outlook.com");
+INSERT INTO klant(naam,email) VALUES("Patrick Vanderspiegel","patrick.vanderspiegel@telenet.be");
+INSERT INTO klatn(naam,email) VALUES("Magda Aelvoet","magda.aelvoet@skynet.be");
+
+
 
