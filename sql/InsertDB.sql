@@ -36,3 +36,28 @@ INSERT INTO film(naam,code,duur,genre,beoordeling,releaseDate,restrictieId) VALU
 INSERT INTO film(naam,code,duur,genre,beoordeling,releaseDate,restrictieId) VALUES("Dawn of the Planet of The Apes","DAWN",130,"Action",7,"2014-07-17",2);
 INSERT INTO film(naam,code,duur,genre,beoordeling,releaseDate,restrictieId) VALUES("The Purge: Anarchy","THEP",99,"Thriller",7,"2014-07-24",4);
 
+-- -----------------------------------------------------
+-- Table programmatie
+-- -----------------------------------------------------
+
+INSERT INTO programmatie(datum,beginUur,zaalId,filmId) VALUES("2014-08-04","20:00:00",1,1);
+INSERT INTO programmatie(datum,beginUur,zaalId,filmId) VALUES("2014-08-04","22:30:00",2,1);
+INSERT INTO programmatie(datum,beginUur,zaalId,filmId) VALUES("2014-08-04","20:00:00",3,2);
+INSERT INTO programmatie(datum,beginUur,zaalId,filmId) VALUES("2014-08-04","22:30:00",4,1);
+INSERT INTO programmatie(datum,beginUur,zaalId,filmId) VALUES("2014-08-11","20:00:00",1,1);
+
+
+-- -----------------------------------------------------
+-- Table barcode
+-- -----------------------------------------------------
+
+INSERT INTO barcode(code,gebruikt) VALUES('201408042000LUCY0604',1);
+INSERT INTO barcode(code,gebruikt) VALUES('201408042230LUCY0802',0);
+INSERT INTO barcode(code,gebruikt) VALUES('201408042000DAWN0508',1);
+INSERT INTO barcode(code,gebruikt) VALUES('201408042000LUCY0605',1);
+INSERT INTO barcode(code,gebruikt) VALUES('201408042000LUCY0806',1);
+INSERT INTO barcode(code,gebruikt) VALUES('201408042000LUCY0807',1);
+INSERT INTO barcode(code,gebruikt) VALUES('201408042000LUCY2603',1);
+INSERT INTO barcode(code,gebruikt) VALUES('201408042000LUCY2604',1);
+
+
