@@ -84,7 +84,7 @@ INSERT INTO ticket(prijs,programmatieId,barcodeId) VALUES(8,4,8);
 
 INSERT INTO klant(naam,email) VALUES("Jos Vermeulen","jos.vermeulen@outlook.com");
 INSERT INTO klant(naam,email) VALUES("Patrick Vanderspiegel","patrick.vanderspiegel@telenet.be");
-INSERT INTO klatn(naam,email) VALUES("Magda Aelvoet","magda.aelvoet@skynet.be");
+INSERT INTO klant(naam,email) VALUES("Magda Aelvoet","magda.aelvoet@skynet.be");
 
 -- -----------------------------------------------------
 -- Table bestelling
