@@ -9,7 +9,7 @@ public class Sender
     public static void main(String[] args) throws JMSException
     {
         //Create a ConnectionFactory
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://192.168.20.120:61616");
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://192.168.20.200:61616");
 
         //Create a Connection to ActiveMQ
         Connection connection = connectionFactory.createConnection();
@@ -27,19 +27,16 @@ public class Sender
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
-        String message;
-        Boolean exit = false;
-
-        while (!exit)
+        while (true)
         {
             try
             {
                 System.out.println("Test");
-                message = bufferedReader.readLine();
+                String message = bufferedReader.readLine();
 
                 if (message.equalsIgnoreCase("exit"))
                 {
-                    exit = true;
+                    break;
                 }
 
                 TextMessage textMessage = session.createTextMessage(message);
