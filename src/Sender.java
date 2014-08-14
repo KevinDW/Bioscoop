@@ -2,10 +2,6 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
-
-/**
- * Created by Kevin on 8/14/2014.
- */
 public class Sender {
     public static void main(String[] args) throws JMSException {
 
