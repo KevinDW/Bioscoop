@@ -83,3 +83,19 @@ INSERT INTO klatn(naam,email) VALUES("Magda Aelvoet","magda.aelvoet@skynet.be");
 
 
 
+-- -----------------------------------------------------
+-- Table bestelling
+-- -----------------------------------------------------
+
+INSERT INTO bestelling(klantId,ticketId) VALUES(1,1);
+INSERT INTO bestelling(klantId,ticketId) VALUES(1,2);
+INSERT INTO bestelling(klantId,ticketId) VALUES(2,3);
+INSERT INTO bestelling(klantId,ticketId) VALUES(2,4);
+INSERT INTO bestelling(klantId,ticketId) VALUES(2,5);
+INSERT INTO bestelling(klantId,ticketId) VALUES(2,6);
+INSERT INTO bestelling(klantId,ticketId) VALUES(3,7);
+INSERT INTO bestelling(klantId,ticketId) VALUES(3,8);
+
+-- -----------------------------------------------------
+-- Table social
+-- -----------------------------------------------------
