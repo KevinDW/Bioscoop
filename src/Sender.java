@@ -1,12 +1,15 @@
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
-public class Sender {
-    public static void main(String[] args) throws JMSException {
-
+public class Sender
+{
+    public static void main(String[] args) throws JMSException
+    {
         //Create a ConnectionFactory
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://192.168.20.120:61616");
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://192.168.20.200:61616");
 
         //Create a Connection to ActiveMQ
         Connection connection = connectionFactory.createConnection();
@@ -22,7 +25,27 @@ public class Sender {
         MessageProducer producer = session.createProducer(destination);
         producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 
+        while (true)
+        {
+            try
+            {
+                System.out.println("Test");
+                String message = bufferedReader.readLine();
 
+                if (message.equalsIgnoreCase("exit"))
+                {
+                    break;
+                }
+
+                TextMessage textMessage = session.createTextMessage(message);
+                producer.send(textMessage);
+            }
+            catch (Exception e)
+            {
+                e.getMessage();
+            }
+        }
     }
 }

@@ -1,4 +1,9 @@
 -- -----------------------------------------------------
+-- Schema bioscoop
+-- -----------------------------------------------------
+USE bioscoop;
+
+-- -----------------------------------------------------
 -- Table bioscoop
 -- -----------------------------------------------------
 INSERT INTO bioscoop(naam,postcode,gemeente,straat) VALUES("Kinepolis Antwerpen", 2030, "Antwerpen", "Groenendaallaan");
@@ -80,8 +85,6 @@ INSERT INTO ticket(prijs,programmatieId,barcodeId) VALUES(8,4,8);
 INSERT INTO klant(naam,email) VALUES("Jos Vermeulen","jos.vermeulen@outlook.com");
 INSERT INTO klant(naam,email) VALUES("Patrick Vanderspiegel","patrick.vanderspiegel@telenet.be");
 INSERT INTO klatn(naam,email) VALUES("Magda Aelvoet","magda.aelvoet@skynet.be");
-
-
 
 -- -----------------------------------------------------
 -- Table bestelling
