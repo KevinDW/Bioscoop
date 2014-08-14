@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class Programmatie extends Model
 {
-    public ResultSet inBepaaldeBioscoopTussenTweeDatums(String bioscoop, Date startDatum, Date eindDatum) throws SQLException
+    public ResultSet inBepaaldeBioscoopInBepaaldePeriode(String bioscoop, Date startDatum, Date eindDatum) throws SQLException
     {
         PreparedStatement statement = super.connection.prepareStatement(
             "SELECT zaal.zaalNr, film.naam " +

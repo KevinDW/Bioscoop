@@ -16,7 +16,7 @@ public class Console
             Date eindDatum = Date.valueOf(LocalDate.of(2014, 8, 31));
 
             Programmatie programmatie = new Programmatie();
-            ResultSet resultSet = programmatie.inBepaaldeBioscoopTussenTweeDatums(bioscoop, startDatum, eindDatum);
+            ResultSet resultSet = programmatie.inBepaaldeBioscoopInBepaaldePeriode(bioscoop, startDatum, eindDatum);
 
             System.out.printf("Bioscoop: %s\n\n", bioscoop);
 
