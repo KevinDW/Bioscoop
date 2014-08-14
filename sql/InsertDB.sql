@@ -18,3 +18,21 @@ INSERT INTO zaal(zaalNr,capaciteit,maxRij,maxKolom,verdieping,bioscoopId) VALUES
 INSERT INTO zaal(zaalNr,capaciteit,maxRij,maxKolom,verdieping,bioscoopId) VALUES(1,252,21,12,1,2);
 INSERT INTO zaal(zaalNr,capaciteit,maxRij,maxKolom,verdieping,bioscoopId) VALUES(1,480,40,12,2,4);
 
+-- -----------------------------------------------------
+-- Table restrictie
+-- -----------------------------------------------------
+
+INSERT INTO restrictie(naam) VALUES(9);
+INSERT INTO restrictie(naam) VALUES(12);
+INSERT INTO restrictie(naam) VALUES(16);
+INSERT INTO restrictie(naam) VALUES(18);
+INSERT INTO restrictie(naam) VALUES(ALL);
+
+-- -----------------------------------------------------
+-- Table film
+-- -----------------------------------------------------
+
+INSERT INTO film(naam,code,duur,genre,beoordeling,releaseDate,restrictieId) VALUES("Lucy","LUCY",100,"Action",7,"2014-07-31",3);
+INSERT INTO film(naam,code,duur,genre,beoordeling,releaseDate,restrictieId) VALUES("Dawn of the Planet of The Apes","DAWN",130,"Action",7,"2014-07-17",2);
+INSERT INTO film(naam,code,duur,genre,beoordeling,releaseDate,restrictieId) VALUES("The Purge: Anarchy","THEP",99,"Thriller",7,"2014-07-24",4);
+
