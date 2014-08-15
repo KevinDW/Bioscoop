@@ -3,7 +3,7 @@ package be.bioscoop.views;
 import be.bioscoop.config.Database;
 
 import java.sql.*;
-import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Console
 {
@@ -11,9 +11,16 @@ public class Console
     {
         try
         {
-            String bioscoop = "Kinepolis Antwerpen";
-            Date startDatum = Date.valueOf(LocalDate.of(2014, 8, 1));
-            Date eindDatum = Date.valueOf(LocalDate.of(2014, 8, 31));
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Bioscoop: ");
+            String bioscoop = scanner.nextLine();
+
+            System.out.print("Begindatum (yyyy-mm-dd): ");
+            Date beginDatum = Date.valueOf(scanner.nextLine());
+
+            System.out.print("Einddatum (yyyy-mm-dd): ");
+            Date eindDatum = Date.valueOf(scanner.nextLine());
 
             Connection connection = Database.connect();
 
@@ -27,7 +34,7 @@ public class Console
             );
 
             statement.setString(1, bioscoop);
-            statement.setDate(2, startDatum);
+            statement.setDate(2, beginDatum);
             statement.setDate(3, eindDatum);
 
             ResultSet resultSet = statement.executeQuery();
