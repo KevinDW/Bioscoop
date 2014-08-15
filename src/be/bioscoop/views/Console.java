@@ -1,5 +1,6 @@
 package be.bioscoop.views;
 
+import be.bioscoop.config.Database;
 import be.bioscoop.models.Programmatie;
 
 import java.sql.*;
@@ -15,8 +16,22 @@ public class Console
             Date startDatum = Date.valueOf(LocalDate.of(2014, 8, 1));
             Date eindDatum = Date.valueOf(LocalDate.of(2014, 8, 31));
 
-            Programmatie programmatie = new Programmatie();
-            ResultSet resultSet = programmatie.inBepaaldeBioscoopInBepaaldePeriode(bioscoop, startDatum, eindDatum);
+            Connection connection = Database.connect();
+
+            PreparedStatement statement = connection.prepareStatement(
+                "SELECT zaal.zaalNr, film.naam " +
+                "FROM programmatie " +
+                "INNER JOIN film ON programmatie.filmId = film.id " +
+                "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
+                "INNER JOIN bioscoop ON zaal.bioscoopId = bioscoop.id " +
+                "WHERE bioscoop.naam = ? AND programmatie.datum BETWEEN ? AND ?"
+            );
+
+            statement.setString(1, bioscoop);
+            statement.setDate(2, startDatum);
+            statement.setDate(3, eindDatum);
+
+            ResultSet resultSet = statement.executeQuery();
 
             System.out.printf("Bioscoop: %s\n\n", bioscoop);
 
@@ -26,6 +41,8 @@ public class Console
                 System.out.printf("%s", resultSet.getString("film.naam"));
                 System.out.println();
             }
+
+            Database.close(statement, resultSet);
         }
         catch (SQLException exception)
         {
