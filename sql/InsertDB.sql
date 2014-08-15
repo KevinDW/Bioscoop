@@ -6,12 +6,12 @@ USE bioscoop ;
 -- -----------------------------------------------------
 -- Table bioscoop
 -- -----------------------------------------------------
-INSERT INTO bioscoop(naam,postcode,gemeente,straat) VALUES("Kinepolis Antwerpen", 2030, "Antwerpen", "Groenendaallaan");
-INSERT INTO bioscoop(naam,postcode,gemeente,straat) VALUES("Kinepolis Brussel", 1020, "Brussel", "Eeuwfeestlaan");
-INSERT INTO bioscoop(naam,postcode,gemeente,straat) VALUES("Utopolis Mechelen", 2800, "Mechelen", "Spuibeekstraat");
-INSERT INTO bioscoop(naam,postcode,gemeente,straat) VALUES("Utopolis Antwerpen", 2030, "Antwerpen", "Groenendaallaan");
-INSERT INTO bioscoop(naam,postcode,gemeente,straat) VALUES("Kinepolis Gent", 9000, "Gent", "Ter Platen");
-INSERT INTO bioscoop(naam,postcode,gemeente,straat) VALUES("Kinepolis Hasselt", 3500, "Hasselt", "Via Media");
+INSERT INTO bioscoop(naam,straat,postcode,gemeente) VALUES("Kinepolis Antwerpen", "Groenendaallaan", 2030, "Antwerpen");
+INSERT INTO bioscoop(naam,straat,postcode,gemeente) VALUES("Kinepolis Brussel", "Eeuwfeestlaan", 1020, "Brussel");
+INSERT INTO bioscoop(naam,straat,postcode,gemeente) VALUES("Utopolis Mechelen", "Spuibeekstraat", 2800, "Mechelen");
+INSERT INTO bioscoop(naam,straat,postcode,gemeente) VALUES("Utopolis Antwerpen", "Groenendaallaan", 2030, "Antwerpen");
+INSERT INTO bioscoop(naam,straat,postcode,gemeente) VALUES("Kinepolis Gent", "Ter Platen", 9000, "Gent");
+INSERT INTO bioscoop(naam,straat,postcode,gemeente) VALUES("Kinepolis Hasselt", "Via Media", 3500, "Hasselt");
 
 
 -- -----------------------------------------------------

@@ -10,9 +10,9 @@ USE bioscoop ;
 CREATE TABLE IF NOT EXISTS bioscoop (
   id INT NOT NULL AUTO_INCREMENT,
   naam VARCHAR(45) NOT NULL,
+  straat VARCHAR(45) NOT NULL,
   postcode VARCHAR(45) NOT NULL,
   gemeente VARCHAR(45) NOT NULL,
-  straat VARCHAR(45) NOT NULL,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
 
