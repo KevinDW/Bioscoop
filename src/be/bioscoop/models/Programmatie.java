@@ -1,15 +1,16 @@
 package be.bioscoop.models;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import be.bioscoop.config.Database;
 
-public class Programmatie extends Model
+import java.sql.*;
+
+public class Programmatie
 {
     public ResultSet inBepaaldeBioscoopInBepaaldePeriode(String bioscoop, Date startDatum, Date eindDatum) throws SQLException
     {
-        PreparedStatement statement = super.connection.prepareStatement(
+        Connection connection = Database.connect();
+
+        PreparedStatement statement = connection.prepareStatement(
             "SELECT zaal.zaalNr, film.naam " +
             "FROM programmatie " +
             "INNER JOIN film ON programmatie.filmId = film.id " +
