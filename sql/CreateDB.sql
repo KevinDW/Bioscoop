@@ -37,6 +37,15 @@ CREATE TABLE IF NOT EXISTS zaal (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table genre
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS genre (
+  id INT NOT NULL AUTO_INCREMENT,
+  naam VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table restrictie
@@ -58,7 +67,7 @@ CREATE TABLE IF NOT EXISTS film (
   duur INT NOT NULL,
   genre VARCHAR(45) NOT NULL,
   beoordeling DECIMAL NULL,
-  releaseDate DATE NOT NULL,
+  datum DATE NOT NULL,
   restrictieId INT NOT NULL,
   PRIMARY KEY (id),
   INDEX FK_Film_Restrictie_idx (restrictieId ASC),

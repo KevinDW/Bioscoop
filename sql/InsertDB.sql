@@ -1,7 +1,7 @@
 -- -----------------------------------------------------
 -- Schema bioscoop
 -- -----------------------------------------------------
-USE bioscoop;
+USE bioscoop ;
 
 -- -----------------------------------------------------
 -- Table bioscoop
@@ -24,6 +24,15 @@ INSERT INTO zaal(zaalNr,capaciteit,maxRij,maxKolom,verdieping,bioscoopId) VALUES
 INSERT INTO zaal(zaalNr,capaciteit,maxRij,maxKolom,verdieping,bioscoopId) VALUES(1,480,40,12,2,4);
 
 -- -----------------------------------------------------
+-- Table genre
+-- -----------------------------------------------------
+
+INSERT INTO genre(naam) VALUES("Actie");
+INSERT INTO genre(naam) VALUES("Drama");
+INSERT INTO genre(naam) VALUES("Thriller");
+INSERT INTO genre(naam) VALUES("Komedie");
+
+-- -----------------------------------------------------
 -- Table restrictie
 -- -----------------------------------------------------
 
@@ -37,9 +46,9 @@ INSERT INTO restrictie(naam) VALUES("ALL");
 -- Table film
 -- -----------------------------------------------------
 
-INSERT INTO film(naam,code,duur,genre,beoordeling,releaseDate,restrictieId) VALUES("Lucy","LUCY",100,"Action",7,"2014-07-31",3);
-INSERT INTO film(naam,code,duur,genre,beoordeling,releaseDate,restrictieId) VALUES("Dawn of the Planet of The Apes","DAWN",130,"Action",7,"2014-07-17",2);
-INSERT INTO film(naam,code,duur,genre,beoordeling,releaseDate,restrictieId) VALUES("The Purge: Anarchy","THEP",99,"Thriller",7,"2014-07-24",4);
+INSERT INTO film(naam,code,duur,genre,beoordeling,datum,restrictieId) VALUES("Lucy","LUCY",100,"Action",7,"2014-07-31",3);
+INSERT INTO film(naam,code,duur,genre,beoordeling,datum,restrictieId) VALUES("Dawn of the Planet of The Apes","DAWN",130,"Action",7,"2014-07-17",2);
+INSERT INTO film(naam,code,duur,genre,beoordeling,datum,restrictieId) VALUES("The Purge: Anarchy","THEP",99,"Thriller",7,"2014-07-24",4);
 
 -- -----------------------------------------------------
 -- Table programmatie
