@@ -1,7 +1,6 @@
 package be.bioscoop.views;
 
 import be.bioscoop.config.Database;
-import be.bioscoop.models.Programmatie;
 
 import java.sql.*;
 import java.time.LocalDate;
