@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xsd:element name="Social">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Message" maxOccurs="unbounded">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Datum" type="xsd:date"/>
+                            <xsd:element name="Type" type="socialType"/>
+                            <xsd:element name="Bericht" type="xsd:string"/>
+                            <xsd:element name="Film" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="Naam" type="xsd:string"/>
+                                        <xsd:element name="Code" type="xsd:string"/>
+                                        <xsd:element name="Duur" type="xsd:int"/>
+                                        <xsd:element name="Beoordeling" type="xsd:double"/>
+                                        <xsd:element name="Datum" type="xsd:date"/>
+                                        <xsd:element name="Restrictie" maxOccurs="unbounded">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="Naam" type="xsd:string"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                        <xsd:element name="Genre" maxOccurs="unbounded">
+                                            <xsd:complexType>
+                                                <xsd:sequence>
+                                                    <xsd:element name="Naam" type="xsd:string"/>
+                                                </xsd:sequence>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:simpleType name="socialType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Twitter"/>
+            <xsd:enumeration value="Facebook"/>
+            <xsd:enumeration value="Google+"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>
