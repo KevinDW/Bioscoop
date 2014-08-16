@@ -41,7 +41,7 @@ public class Console
 
             System.out.printf("Bioscoop: %s\n\n", bioscoop);
 
-            while(resultSet.next())
+            while (resultSet.next())
             {
                 System.out.printf("%d | ", resultSet.getInt("zaal.zaalNr"));
                 System.out.printf("%s", resultSet.getString("film.naam"));
