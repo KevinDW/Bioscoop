@@ -46,9 +46,9 @@ INSERT INTO restrictie(naam) VALUES("ALL");
 -- Table film
 -- -----------------------------------------------------
 
-INSERT INTO film(naam,code,duur,genre,beoordeling,datum,restrictieId) VALUES("Lucy","LUCY",100,"Action",7,"2014-07-31",3);
-INSERT INTO film(naam,code,duur,genre,beoordeling,datum,restrictieId) VALUES("Dawn of the Planet of The Apes","DAWN",130,"Action",7,"2014-07-17",2);
-INSERT INTO film(naam,code,duur,genre,beoordeling,datum,restrictieId) VALUES("The Purge: Anarchy","THEP",99,"Thriller",7,"2014-07-24",4);
+INSERT INTO film(naam,code,duur,beoordeling,datum,restrictieId,genreId) VALUES("Lucy","LUCY",100,7,"2014-07-31",3,2);
+INSERT INTO film(naam,code,duur,beoordeling,datum,restrictieId,genreId) VALUES("Dawn of the Planet of The Apes","DAWN",130,7,"2014-07-17",2,1);
+INSERT INTO film(naam,code,duur,beoordeling,datum,restrictieId,genreId) VALUES("The Purge: Anarchy","THEP",99,7,"2014-07-24",4,3);
 
 -- -----------------------------------------------------
 -- Table programmatie

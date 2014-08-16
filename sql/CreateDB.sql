@@ -65,15 +65,21 @@ CREATE TABLE IF NOT EXISTS film (
   naam VARCHAR(45) NOT NULL,
   code CHAR(4) NOT NULL,
   duur INT NOT NULL,
-  genre VARCHAR(45) NOT NULL,
   beoordeling DECIMAL NULL,
   datum DATE NOT NULL,
   restrictieId INT NOT NULL,
+  genreId INT NOT NULL,
   PRIMARY KEY (id),
   INDEX FK_Film_Restrictie_idx (restrictieId ASC),
+  INDEX FK_Film_Genre_idx (genreId ASC),
   CONSTRAINT FK_Film_Restrictie
     FOREIGN KEY (restrictieId)
     REFERENCES restrictie (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT FK_Film_Genre
+    FOREIGN KEY (genreId)
+    REFERENCES genre (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
