@@ -12,9 +12,7 @@ public final class Database
 
     public static Connection connect() throws SQLException
     {
-        connection = DriverManager.getConnection(database, username, password);
-
-        return connection;
+        return DriverManager.getConnection(database, username, password);
     }
 
     public static void close(Statement statement, ResultSet resultSet) throws SQLException
