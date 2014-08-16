@@ -13,16 +13,9 @@ public class Film
     private Genre genre;
     private Restrictie restrictie;
 
-    public Film(int id, String naam, String code, int duur, double beoordeling, Date datum, Genre genre, Restrictie restrictie)
+    public Film(int id)
     {
         this.id = id;
-        this.naam = naam;
-        this.code = code;
-        this.duur = duur;
-        this.beoordeling = beoordeling;
-        this.datum = datum;
-        this.genre = genre;
-        this.restrictie = restrictie;
     }
 
     public int getId()

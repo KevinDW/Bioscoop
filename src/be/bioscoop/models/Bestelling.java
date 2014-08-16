@@ -6,11 +6,9 @@ public class Bestelling
     private Klant klant;
     private Ticket ticket;
 
-    public Bestelling(int id, Klant klant, Ticket ticket)
+    public Bestelling(int id)
     {
         this.id = id;
-        this.klant = klant;
-        this.ticket = ticket;
     }
 
     public int getId()

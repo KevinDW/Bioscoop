@@ -6,11 +6,9 @@ public class Barcode
     private String code;
     private boolean gebruikt;
 
-    public Barcode(int id, String code, boolean gebruikt)
+    public Barcode(int id)
     {
         this.id = id;
-        this.code = code;
-        this.gebruikt = gebruikt;
     }
 
     public int getId()

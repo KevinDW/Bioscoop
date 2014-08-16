@@ -11,13 +11,9 @@ public class Programmatie
     private Zaal zaal;
     private Film film;
 
-    public Programmatie(int id, Date datum, Time beginUur, Zaal zaal, Film film)
+    public Programmatie(int id)
     {
         this.id = id;
-        this.datum = datum;
-        this.beginUur = beginUur;
-        this.zaal = zaal;
-        this.film = film;
     }
 
     public int getId()

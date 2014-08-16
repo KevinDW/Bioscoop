@@ -10,13 +10,9 @@ public class Social
     private String bericht;
     private Film film;
 
-    public Social(int id, Date datum, String type, String bericht, Film film)
+    public Social(int id)
     {
         this.id = id;
-        this.datum = datum;
-        this.type = type;
-        this.bericht = bericht;
-        this.film = film;
     }
 
     public int getId()

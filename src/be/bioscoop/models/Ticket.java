@@ -7,12 +7,9 @@ public class Ticket
     private Programmatie programmatie;
     private Barcode barcode;
 
-    public Ticket(int id, double prijs, Programmatie programmatie, Barcode barcode)
+    public Ticket(int id)
     {
         this.id = id;
-        this.prijs = prijs;
-        this.programmatie = programmatie;
-        this.barcode = barcode;
     }
 
     public int getId()

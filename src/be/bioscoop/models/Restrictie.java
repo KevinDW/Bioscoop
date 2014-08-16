@@ -5,10 +5,9 @@ public class Restrictie
     private int id;
     private String naam;
 
-    public Restrictie(int id, String naam)
+    public Restrictie(int id)
     {
         this.id = id;
-        this.naam = naam;
     }
 
     public int getId()
