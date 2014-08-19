@@ -1,6 +1,8 @@
 -- -----------------------------------------------------
 -- Schema bioscoop
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS bioscoop ;
+
 CREATE SCHEMA IF NOT EXISTS bioscoop DEFAULT CHARACTER SET utf8 ;
 USE bioscoop ;
 
@@ -36,6 +38,7 @@ CREATE TABLE IF NOT EXISTS zaal (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table genre
@@ -119,6 +122,7 @@ CREATE TABLE IF NOT EXISTS barcode (
   gebruikt BIT NOT NULL,
   PRIMARY KEY (id))
 ENGINE = InnoDB;
+
 
 -- -----------------------------------------------------
 -- Table ticket
