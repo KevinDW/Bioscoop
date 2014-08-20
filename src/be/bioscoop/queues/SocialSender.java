@@ -7,10 +7,7 @@ import javax.jms.*;
 
 public class SocialSender
 {
-    public SocialSender()
-    {
-
-    }
+    public SocialSender() {}
 
     public void sendMessage() throws Exception
     {
