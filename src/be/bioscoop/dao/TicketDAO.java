@@ -1,8 +1,13 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.*;
+import be.bioscoop.models.Barcode;
+import be.bioscoop.models.Programmatie;
+import be.bioscoop.models.Ticket;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +22,7 @@ public class TicketDAO
 
     public List<Ticket> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement(
-                "SELECT * FROM ticket ORDER BY id"
-        );
-
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM ticket ORDER BY id");
         ResultSet resultSet = statement.executeQuery();
         List<Ticket> tickets = new ArrayList<Ticket>();
 

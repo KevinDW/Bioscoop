@@ -1,8 +1,11 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.*;
+import be.bioscoop.models.Klant;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +20,7 @@ public class KlantDAO
 
     public List<Klant> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement(
-                "SELECT * FROM klant ORDER BY id"
-        );
-
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM klant ORDER BY id");
         ResultSet resultSet = statement.executeQuery();
         List<Klant> klanten = new ArrayList<Klant>();
 

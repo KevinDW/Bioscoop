@@ -1,8 +1,12 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.*;
+import be.bioscoop.models.Bioscoop;
+import be.bioscoop.models.Zaal;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +21,7 @@ public class ZaalDAO
 
     public List<Zaal> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement(
-                "SELECT * FROM zaal ORDER BY zaalNr"
-        );
-
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM zaal ORDER BY zaalNr");
         ResultSet resultSet = statement.executeQuery();
         List<Zaal> zalen = new ArrayList<Zaal>();
 
@@ -34,7 +35,6 @@ public class ZaalDAO
             zaal.setMaxKolom(resultSet.getInt(5));
             zaal.setVerdieping(resultSet.getInt(6));
             zaal.setBioscoop(new Bioscoop(resultSet.getInt(7)));
-
 
             zalen.add(zaal);
         }

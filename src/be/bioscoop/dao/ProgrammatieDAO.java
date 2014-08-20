@@ -4,7 +4,10 @@ import be.bioscoop.models.Film;
 import be.bioscoop.models.Programmatie;
 import be.bioscoop.models.Zaal;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,10 +22,7 @@ public class ProgrammatieDAO
 
     public List<Programmatie> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT * FROM programmatie ORDER BY datum"
-        );
-
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM programmatie ORDER BY datum");
         ResultSet resultSet = statement.executeQuery();
         List<Programmatie> programmaties = new ArrayList<Programmatie>();
 

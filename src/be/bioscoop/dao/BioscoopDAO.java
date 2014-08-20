@@ -1,11 +1,11 @@
 package be.bioscoop.dao;
 
 import be.bioscoop.models.Bioscoop;
-import be.bioscoop.models.Film;
-import be.bioscoop.models.Programmatie;
-import be.bioscoop.models.Zaal;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +20,7 @@ public class BioscoopDAO
 
     public List<Bioscoop> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement(
-                "SELECT * FROM bioscoop ORDER BY postcode"
-        );
-
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM bioscoop ORDER BY postcode");
         ResultSet resultSet = statement.executeQuery();
         List<Bioscoop> bioscopen = new ArrayList<Bioscoop>();
 

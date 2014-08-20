@@ -1,8 +1,13 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.*;
+import be.bioscoop.models.Film;
+import be.bioscoop.models.Genre;
+import be.bioscoop.models.Restrictie;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,10 +22,7 @@ public class FilmDAO
 
     public List<Film> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement(
-                "SELECT * FROM film ORDER BY naam"
-        );
-
+        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM film ORDER BY naam");
         ResultSet resultSet = statement.executeQuery();
         List<Film> films = new ArrayList<Film>();
 
