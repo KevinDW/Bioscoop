@@ -4,20 +4,22 @@ import be.bioscoop.config.Database;
 import be.bioscoop.dao.FilmDAO;
 import be.bioscoop.dao.SocialDAO;
 import be.bioscoop.models.Social;
+
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
 import javax.jms.*;
-import javax.jms.Connection;
+import java.io.IOException;
 import java.io.StringReader;
-import java.sql.*;
-import java.util.Iterator;
+import java.sql.Date;
+import java.sql.SQLException;
 
 public class SocialReceiver
 {
-    public void receiveMessage() throws JMSException
+    public void receiveMessage() throws JMSException, JDOMException, IOException, SQLException
     {
         // Connecteren naar ActiveMQ
         javax.jms.Connection amqConnection = new ActiveMQConnectionFactory("tcp://192.168.20.200:61616").createConnection();
@@ -36,36 +38,30 @@ public class SocialReceiver
         // Maak een consumer aan die berichten van de queue ontvangt
         MessageConsumer consumer = session.createConsumer(destination);
 
-        try
+        Message message = consumer.receive(1000);
+        TextMessage textMessage = (TextMessage) message;
+
+        java.sql.Connection dbConnection = Database.connect();
+
+        FilmDAO filmDAO = new FilmDAO(dbConnection);
+        SocialDAO socialDAO = new SocialDAO(dbConnection);
+
+        SAXBuilder sax = new SAXBuilder();
+        Document doc = sax.build(new StringReader(textMessage.getText()));
+        Element root = doc.getRootElement();
+
+        for (Object object : root.getChildren())
         {
-            Message message = consumer.receive(1000);
-            TextMessage textMessage = (TextMessage) message;
+            Element element = (Element) object;
 
-            java.sql.Connection dbConnection = Database.connect();
-
-            FilmDAO filmDAO = new FilmDAO(dbConnection);
-            SocialDAO socialDAO = new SocialDAO(dbConnection);
-
-            SAXBuilder sax = new SAXBuilder();
-            Document doc = sax.build(new StringReader(textMessage.getText()));
-            Element root = doc.getRootElement();
-
-            for (Object object : root.getChildren())
-            {
-                Element element = (Element) object;
-                Social social = new Social();
-
-                social.setDatum(Date.valueOf(element.getChildText("Datum")));
-                social.setType(element.getChildText("Type"));
-                social.setBericht(element.getChildText("Bericht"));
-                social.setFilm(filmDAO.get(Integer.parseInt(element.getChildText("Film"))));
-
-                socialDAO.insert(social);
-            }
-        }
-        catch (Exception exception)
-        {
-            exception.printStackTrace();
+            socialDAO.insert(
+                new Social(
+                    Date.valueOf(element.getChildText("Datum")),
+                    element.getChildText("Type"),
+                    element.getChildText("Bericht"),
+                    filmDAO.get(Integer.parseInt(element.getChildText("Film")))
+                )
+            );
         }
 
         // Consumer sluiten
