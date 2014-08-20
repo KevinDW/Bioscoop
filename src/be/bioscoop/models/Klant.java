@@ -6,9 +6,11 @@ public class Klant
     private String naam;
     private String email;
 
-    public Klant(int id)
+    public Klant(int id, String naam, String email)
     {
         this.id = id;
+        this.naam = naam;
+        this.email = email;
     }
 
     public int getId()

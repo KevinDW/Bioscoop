@@ -5,9 +5,10 @@ public class Genre
     private int id;
     private String naam;
 
-    public Genre(int id)
+    public Genre(int id, String naam)
     {
         this.id = id;
+        this.naam = naam;
     }
 
     public int getId()

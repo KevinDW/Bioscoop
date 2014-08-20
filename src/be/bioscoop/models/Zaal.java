@@ -10,9 +10,15 @@ public class Zaal
     private int verdieping;
     private Bioscoop bioscoop;
 
-    public Zaal(int id)
+    public Zaal(int id, int zaalNr, int capaciteit, String maxRij, int maxKolom, int verdieping, Bioscoop bioscoop)
     {
         this.id = id;
+        this.zaalNr = zaalNr;
+        this.capaciteit = capaciteit;
+        this.maxRij = maxRij;
+        this.maxKolom = maxKolom;
+        this.verdieping = verdieping;
+        this.bioscoop = bioscoop;
     }
 
     public int getId()
