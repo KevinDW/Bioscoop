@@ -2,10 +2,7 @@ package be.bioscoop.dao;
 
 import be.bioscoop.models.Programmatie;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,5 +58,39 @@ public class ProgrammatieDAO
             new ZaalDAO(this.connection).get(resultSet.getInt(4)),
             new FilmDAO(this.connection).get(resultSet.getInt(5))
         );
+    }
+
+    public List<Programmatie> programmatiesVoorBepaaldeBioscoopTussenTweeDatums(String bioscoop, Date beginDatum, Date eindDatum) throws SQLException
+    {
+        PreparedStatement statement = connection.prepareStatement(
+            "SELECT zaal.zaalNr, film.naam " +
+            "FROM programmatie " +
+            "INNER JOIN film ON programmatie.filmId = film.id " +
+            "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
+            "INNER JOIN bioscoop ON zaal.bioscoopId = bioscoop.id " +
+            "WHERE bioscoop.naam = ? AND programmatie.datum BETWEEN ? AND ?"
+        );
+
+        statement.setString(1, bioscoop);
+        statement.setDate(2, beginDatum);
+        statement.setDate(3, eindDatum);
+
+        ResultSet resultSet = statement.executeQuery();
+        List<Programmatie> programmaties = new ArrayList<Programmatie>();
+
+        while (resultSet.next())
+        {
+            programmaties.add(
+                new Programmatie(
+                    resultSet.getInt(1),
+                    resultSet.getDate(2),
+                    resultSet.getTime(3),
+                    new ZaalDAO(this.connection).get(resultSet.getInt(4)),
+                    new FilmDAO(this.connection).get(resultSet.getInt(5))
+                )
+            );
+        }
+
+        return programmaties;
     }
 }

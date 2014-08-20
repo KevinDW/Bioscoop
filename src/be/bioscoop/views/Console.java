@@ -1,6 +1,7 @@
 package be.bioscoop.views;
 
 import be.bioscoop.config.Database;
+import be.bioscoop.dao.ProgrammatieDAO;
 import be.bioscoop.queues.SocialReceiver;
 import be.bioscoop.queues.SocialSender;
 
@@ -32,31 +33,10 @@ public class Console
         {
             Connection connection = Database.connect();
 
-            PreparedStatement statement = connection.prepareStatement(
-                "SELECT zaal.zaalNr, film.naam " +
-                "FROM programmatie " +
-                "INNER JOIN film ON programmatie.filmId = film.id " +
-                "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
-                "INNER JOIN bioscoop ON zaal.bioscoopId = bioscoop.id " +
-                "WHERE bioscoop.naam = ? AND programmatie.datum BETWEEN ? AND ?"
-            );
+            ProgrammatieDAO programmatieDAO = new ProgrammatieDAO(connection);
+            programmatieDAO.programmatiesVoorBepaaldeBioscoopTussenTweeDatums(bioscoop, beginDatum, eindDatum);
 
-            statement.setString(1, bioscoop);
-            statement.setDate(2, beginDatum);
-            statement.setDate(3, eindDatum);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            System.out.printf("Bioscoop: %s\n\n", bioscoop);
-
-            while (resultSet.next())
-            {
-                System.out.printf("%d | ", resultSet.getInt("zaal.zaalNr"));
-                System.out.printf("%s", resultSet.getString("film.naam"));
-                System.out.println();
-            }
-
-            Database.close(statement, resultSet);
+            Database.close();
         }
         catch (SQLException exception)
         {
