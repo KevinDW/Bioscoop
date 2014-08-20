@@ -1,16 +1,21 @@
 package be.bioscoop.queues;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.*;
+
 
 import javax.jms.*;
 
 public class SocialSender
 {
-    public SocialSender()  throws JMSException
+    public SocialSender()
+    {
+
+    }
+
+    public void sendMessage() throws Exception
     {
         //Create a ConnectionFactory
-        ActiveMQConnectionFactory connectionFactory =
-                new ActiveMQConnectionFactory("tcp://192.168.20.200:61616");
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://192.168.20.200:61616");
 
         //Create a Connection to ActiveMQ
         Connection connection = connectionFactory.createConnection();
@@ -29,5 +34,9 @@ public class SocialSender
         // Non-Persistant: berichten niet door de queue naar disk worden geschreven
         MessageProducer producer = session.createProducer(destination);
         producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+
+        TextMessage message = session.createTextMessage();
+        message.setText("Dit is een test!");
+        producer.send(message);
     }
 }

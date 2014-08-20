@@ -1,9 +1,13 @@
 package be.bioscoop.views;
 
 import be.bioscoop.config.Database;
+import be.bioscoop.queues.SocialSender;
 
+import javax.jms.JMSException;
 import java.sql.*;
 import java.util.Scanner;
+
+
 
 public class Console
 {
@@ -49,10 +53,26 @@ public class Console
             }
 
             Database.close(statement, resultSet);
+
+
         }
         catch (SQLException exception)
         {
             exception.printStackTrace();
         }
+
+        try
+        {
+            SocialSender socialSender = new SocialSender();
+            socialSender.sendMessage();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+
+
+
     }
 }
