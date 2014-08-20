@@ -1,6 +1,5 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Film;
 import be.bioscoop.models.Social;
 
 import java.sql.Connection;
@@ -21,20 +20,24 @@ public class SocialDAO
 
     public List<Social> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM social ORDER BY datum");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, datum, type, bericht, filmId FROM social ORDER BY datum"
+        );
+
         ResultSet resultSet = statement.executeQuery();
         List<Social> socials = new ArrayList<Social>();
 
         while (resultSet.next())
         {
-            Social social = new Social();
-
-            social.setDatum(resultSet.getDate(2));
-            social.setType(resultSet.getString(3));
-            social.setBericht(resultSet.getString(4));
-            social.setFilm(new Film(resultSet.getInt(5)));
-
-            socials.add(social);
+            socials.add(
+                new Social(
+                    resultSet.getInt(1),
+                    resultSet.getDate(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    new FilmDAO(this.connection).get(resultSet.getInt(5))
+                )
+            );
         }
 
         return socials;
@@ -52,5 +55,25 @@ public class SocialDAO
         statement.setInt(4, social.getFilm().getId());
 
         return statement.execute();
+    }
+
+    public Social get(int id) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, datum, type, bericht, filmId FROM film WHERE id = ?"
+        );
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Social(
+            resultSet.getInt(1),
+            resultSet.getDate(2),
+            resultSet.getString(3),
+            resultSet.getString(4),
+            new FilmDAO(this.connection).get(resultSet.getInt(5))
+        );
     }
 }

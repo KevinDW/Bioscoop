@@ -20,22 +20,46 @@ public class BioscoopDAO
 
     public List<Bioscoop> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM bioscoop ORDER BY postcode");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam, straat, postcode, gemeente FROM bioscoop ORDER BY postcode"
+        );
+
         ResultSet resultSet = statement.executeQuery();
         List<Bioscoop> bioscopen = new ArrayList<Bioscoop>();
 
         while (resultSet.next())
         {
-            Bioscoop bioscoop = new Bioscoop(resultSet.getInt(1));
-
-            bioscoop.setNaam(resultSet.getString(2));
-            bioscoop.setPostcode(resultSet.getString(3));
-            bioscoop.setGemeente(resultSet.getString(4));
-            bioscoop.setStraat(resultSet.getString(5));
-
-            bioscopen.add(bioscoop);
+            bioscopen.add(
+                new Bioscoop(
+                    resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5)
+                )
+            );
         }
 
         return bioscopen;
+    }
+
+    public Bioscoop get(int id) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam, straat, postcode, gemeente FROM film WHERE id = ?"
+        );
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Bioscoop(
+            resultSet.getInt(1),
+            resultSet.getString(2),
+            resultSet.getString(3),
+            resultSet.getString(4),
+            resultSet.getString(5)
+        );
     }
 }

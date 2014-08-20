@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Barcode;
+import be.bioscoop.models.Genre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,36 +9,41 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BarcodeDAO
+public class GenreDAO
 {
     private Connection connection;
 
-    public BarcodeDAO(Connection connection)
+    public GenreDAO(Connection connection)
     {
         this.connection = connection;
     }
 
-    public List<Barcode> all() throws SQLException
+    public List<Genre> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, code, gebruikt FROM barcode ORDER BY code"
+            "SELECT id, naam FROM restrictie ORDER BY naam"
         );
 
         ResultSet resultSet = statement.executeQuery();
-        List<Barcode> barcodes = new ArrayList<Barcode>();
+        List<Genre> restricties = new ArrayList<Genre>();
 
         while (resultSet.next())
         {
-            barcodes.add(new Barcode(resultSet.getInt(1), resultSet.getString(2), resultSet.getBoolean(3)));
+            restricties.add(
+                new Genre(
+                    resultSet.getInt(1),
+                    resultSet.getString(2)
+                )
+            );
         }
 
-        return barcodes;
+        return restricties;
     }
 
-    public Barcode get(int id) throws SQLException
+    public Genre get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, code, gebruikt FROM film WHERE id = ?"
+            "SELECT id, naam FROM film WHERE id = ?"
         );
 
         statement.setInt(1, id);
@@ -46,10 +51,9 @@ public class BarcodeDAO
         ResultSet resultSet = statement.executeQuery();
         resultSet.first();
 
-        return new Barcode(
+        return new Genre(
             resultSet.getInt(1),
-            resultSet.getString(2),
-            resultSet.getBoolean(3)
+            resultSet.getString(2)
         );
     }
 }

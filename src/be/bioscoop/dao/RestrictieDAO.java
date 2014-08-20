@@ -20,20 +20,39 @@ public class RestrictieDAO
 
     public List<Restrictie> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM restrictie ORDER BY naam");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam FROM restrictie ORDER BY naam"
+        );
+
         ResultSet resultSet = statement.executeQuery();
         List<Restrictie> restricties = new ArrayList<Restrictie>();
 
         while (resultSet.next())
         {
-            Restrictie restrictie = new Restrictie(resultSet.getInt(1));
-
-            restrictie.setNaam(resultSet.getString(2));
-
-
-            restricties.add(restrictie);
+            restricties.add(
+                new Restrictie(
+                    resultSet.getInt(1), resultSet.getString(2)
+                )
+            );
         }
 
         return restricties;
+    }
+
+    public Restrictie get(int id) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam FROM film WHERE id = ?"
+        );
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Restrictie(
+            resultSet.getInt(1),
+            resultSet.getString(2)
+        );
     }
 }

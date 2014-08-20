@@ -1,8 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Film;
 import be.bioscoop.models.Programmatie;
-import be.bioscoop.models.Zaal;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,22 +20,46 @@ public class ProgrammatieDAO
 
     public List<Programmatie> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM programmatie ORDER BY datum");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, datum, beginUur, zaalId, filmId FROM programmatie ORDER BY datum"
+        );
+
         ResultSet resultSet = statement.executeQuery();
         List<Programmatie> programmaties = new ArrayList<Programmatie>();
 
         while (resultSet.next())
         {
-            Programmatie programmatie = new Programmatie(resultSet.getInt(1));
-
-            programmatie.setDatum(resultSet.getDate(2));
-            programmatie.setBeginUur(resultSet.getTime(3));
-            programmatie.setZaal(new Zaal(resultSet.getInt(4)));
-            programmatie.setFilm(new Film(resultSet.getInt(5)));
-
-            programmaties.add(programmatie);
+            programmaties.add(
+                new Programmatie(
+                    resultSet.getInt(1),
+                    resultSet.getDate(2),
+                    resultSet.getTime(3),
+                    new ZaalDAO(this.connection).get(resultSet.getInt(4)),
+                    new FilmDAO(this.connection).get(resultSet.getInt(5))
+                )
+            );
         }
 
         return programmaties;
+    }
+
+    public Programmatie get(int id) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, datum, beginuur, zaalId, filmId FROM film WHERE id = ?"
+        );
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Programmatie(
+            resultSet.getInt(1),
+            resultSet.getDate(2),
+            resultSet.getTime(3),
+            new ZaalDAO(this.connection).get(resultSet.getInt(4)),
+            new FilmDAO(this.connection).get(resultSet.getInt(5))
+        );
     }
 }

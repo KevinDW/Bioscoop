@@ -1,7 +1,5 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Barcode;
-import be.bioscoop.models.Programmatie;
 import be.bioscoop.models.Ticket;
 
 import java.sql.Connection;
@@ -22,21 +20,44 @@ public class TicketDAO
 
     public List<Ticket> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM ticket ORDER BY id");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, prijs, programmatieId, barcodeId FROM ticket ORDER BY id"
+        );
+
         ResultSet resultSet = statement.executeQuery();
         List<Ticket> tickets = new ArrayList<Ticket>();
 
         while (resultSet.next())
         {
-            Ticket ticket = new Ticket(resultSet.getInt(1));
-
-            ticket.setPrijs(resultSet.getDouble(2));
-            ticket.setProgrammatie(new Programmatie(resultSet.getInt(3)));
-            ticket.setBarcode(new Barcode(resultSet.getInt(4)));
-
-            tickets.add(ticket);
+            tickets.add(
+                new Ticket(
+                    resultSet.getInt(1),
+                    resultSet.getDouble(2),
+                    new ProgrammatieDAO(this.connection).get(resultSet.getInt(3)),
+                    new BarcodeDAO(this.connection).get(resultSet.getInt(4))
+                )
+            );
         }
 
         return tickets;
+    }
+
+    public Ticket get(int id) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, prijs, programmatieId, barcodeId FROM film WHERE id = ?"
+        );
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Ticket(
+            resultSet.getInt(1),
+            resultSet.getDouble(2),
+            new ProgrammatieDAO(this.connection).get(resultSet.getInt(3)),
+            new BarcodeDAO(this.connection).get(resultSet.getInt(4))
+        );
     }
 }

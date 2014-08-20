@@ -1,8 +1,6 @@
 package be.bioscoop.dao;
 
 import be.bioscoop.models.Film;
-import be.bioscoop.models.Genre;
-import be.bioscoop.models.Restrictie;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,23 +20,27 @@ public class FilmDAO
 
     public List<Film> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM film ORDER BY naam");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam, code, jaar, duur, beoordeling, restrictieId, genreId FROM film ORDER BY naam"
+        );
+
         ResultSet resultSet = statement.executeQuery();
         List<Film> films = new ArrayList<Film>();
 
         while (resultSet.next())
         {
-            Film film = new Film(resultSet.getInt(1));
-
-            film.setNaam(resultSet.getString(2));
-            film.setCode(resultSet.getString(3));
-            film.setDuur(resultSet.getInt(4));
-            film.setGenre(new Genre(resultSet.getInt(5)));
-            film.setBeoordeling(resultSet.getDouble(6));
-            film.setDatum(resultSet.getDate(7));
-            film.setRestrictie(new Restrictie(resultSet.getInt(8)));
-
-            films.add(film);
+            films.add(
+                new Film(
+                    resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getInt(4),
+                    resultSet.getInt(5),
+                    resultSet.getDouble(6),
+                    new RestrictieDAO(this.connection).get(resultSet.getInt(7)),
+                    new GenreDAO(this.connection).get(resultSet.getInt(8))
+                )
+            );
         }
 
         return films;
@@ -55,16 +57,15 @@ public class FilmDAO
         ResultSet resultSet = statement.executeQuery();
         resultSet.first();
 
-        Film film = new Film(resultSet.getInt(1));
-
-        film.setNaam(resultSet.getString(2));
-        film.setCode(resultSet.getString(3));
-        film.setDatum(resultSet.getDate(4));
-        film.setDuur(resultSet.getInt(5));
-        film.setBeoordeling(resultSet.getDouble(6));
-        film.setGenre(new Genre(resultSet.getInt(7)));
-        film.setRestrictie(new Restrictie(resultSet.getInt(8)));
-
-        return film;
+        return new Film(
+            resultSet.getInt(1),
+            resultSet.getString(2),
+            resultSet.getString(3),
+            resultSet.getInt(4),
+            resultSet.getInt(5),
+            resultSet.getDouble(6),
+            new RestrictieDAO(this.connection).get(resultSet.getInt(7)),
+            new GenreDAO(this.connection).get(resultSet.getInt(8))
+        );
     }
 }

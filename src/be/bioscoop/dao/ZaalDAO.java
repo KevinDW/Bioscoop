@@ -1,6 +1,5 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Bioscoop;
 import be.bioscoop.models.Zaal;
 
 import java.sql.Connection;
@@ -21,24 +20,50 @@ public class ZaalDAO
 
     public List<Zaal> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM zaal ORDER BY zaalNr");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, zaalNr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId FROM zaal ORDER BY zaalNr"
+        );
+
         ResultSet resultSet = statement.executeQuery();
         List<Zaal> zalen = new ArrayList<Zaal>();
 
         while (resultSet.next())
         {
-            Zaal zaal = new Zaal(resultSet.getInt(1));
-
-            zaal.setZaalNr(resultSet.getInt(2));
-            zaal.setCapaciteit(resultSet.getInt(3));
-            zaal.setMaxRij(resultSet.getString(4));
-            zaal.setMaxKolom(resultSet.getInt(5));
-            zaal.setVerdieping(resultSet.getInt(6));
-            zaal.setBioscoop(new Bioscoop(resultSet.getInt(7)));
-
-            zalen.add(zaal);
+            zalen.add(
+                new Zaal(
+                    resultSet.getInt(1),
+                    resultSet.getInt(2),
+                    resultSet.getInt(3),
+                    resultSet.getString(4),
+                    resultSet.getInt(5),
+                    resultSet.getInt(6),
+                    new BioscoopDAO(this.connection).get(resultSet.getInt(2))
+                )
+            );
         }
 
         return zalen;
+    }
+
+    public Zaal get(int id) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, zaalnr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId FROM film WHERE id = ?"
+        );
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Zaal(
+            resultSet.getInt(1),
+            resultSet.getInt(2),
+            resultSet.getInt(3),
+            resultSet.getString(4),
+            resultSet.getInt(5),
+            resultSet.getInt(6),
+            new BioscoopDAO(this.connection).get(resultSet.getInt(2))
+        );
     }
 }

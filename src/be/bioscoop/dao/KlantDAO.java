@@ -20,20 +20,42 @@ public class KlantDAO
 
     public List<Klant> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM klant ORDER BY id");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam, email FROM klant ORDER BY id"
+        );
+
         ResultSet resultSet = statement.executeQuery();
         List<Klant> klanten = new ArrayList<Klant>();
 
         while (resultSet.next())
         {
-            Klant klant = new Klant(resultSet.getInt(1));
-
-            klant.setNaam(resultSet.getString(2));
-            klant.setEmail(resultSet.getString(3));
-
-            klanten.add(klant);
+            klanten.add(
+                new Klant(
+                    resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3)
+                )
+            );
         }
 
         return klanten;
+    }
+
+    public Klant get(int id) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam, email FROM film WHERE id = ?"
+        );
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Klant(
+            resultSet.getInt(1),
+            resultSet.getString(2),
+            resultSet.getString(3)
+        );
     }
 }
