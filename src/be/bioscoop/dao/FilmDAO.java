@@ -43,4 +43,28 @@ public class FilmDAO
 
         return films;
     }
+
+    public Film get(int id) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam, code, datum, duur, beoordeling, genreId, restrictieId FROM film WHERE id = ?"
+        );
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        Film film = new Film(resultSet.getInt(1));
+
+        film.setNaam(resultSet.getString(2));
+        film.setCode(resultSet.getString(3));
+        film.setDatum(resultSet.getDate(4));
+        film.setDuur(resultSet.getInt(5));
+        film.setBeoordeling(resultSet.getDouble(6));
+        film.setGenre(new Genre(resultSet.getInt(7)));
+        film.setRestrictie(new Restrictie(resultSet.getInt(8)));
+
+        return film;
+    }
 }

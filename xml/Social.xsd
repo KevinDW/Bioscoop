@@ -2,40 +2,16 @@
 
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 
-    <xsd:element name="Social">
+    <xsd:element name="social">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element name="Message" maxOccurs="unbounded">
+                <xsd:element name="message" maxOccurs="unbounded">
                     <xsd:complexType>
                         <xsd:sequence>
                             <xsd:element name="Datum" type="xsd:date"/>
                             <xsd:element name="Type" type="socialType"/>
                             <xsd:element name="Bericht" type="xsd:string"/>
-                            <xsd:element name="Film" maxOccurs="unbounded">
-                                <xsd:complexType>
-                                    <xsd:sequence>
-                                        <xsd:element name="Naam" type="xsd:string"/>
-                                        <xsd:element name="Code" type="xsd:string"/>
-                                        <xsd:element name="Duur" type="xsd:int"/>
-                                        <xsd:element name="Beoordeling" type="xsd:double"/>
-                                        <xsd:element name="Datum" type="xsd:date"/>
-                                        <xsd:element name="Restrictie" maxOccurs="unbounded">
-                                            <xsd:complexType>
-                                                <xsd:sequence>
-                                                    <xsd:element name="Naam" type="xsd:string"/>
-                                                </xsd:sequence>
-                                            </xsd:complexType>
-                                        </xsd:element>
-                                        <xsd:element name="Genre" maxOccurs="unbounded">
-                                            <xsd:complexType>
-                                                <xsd:sequence>
-                                                    <xsd:element name="Naam" type="xsd:string"/>
-                                                </xsd:sequence>
-                                            </xsd:complexType>
-                                        </xsd:element>
-                                    </xsd:sequence>
-                                </xsd:complexType>
-                            </xsd:element>
+                            <xsd:element name="Film" type="xsd:integer"/>
                         </xsd:sequence>
                     </xsd:complexType>
                 </xsd:element>

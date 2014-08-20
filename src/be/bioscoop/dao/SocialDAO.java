@@ -27,7 +27,7 @@ public class SocialDAO
 
         while (resultSet.next())
         {
-            Social social = new Social(resultSet.getInt(1));
+            Social social = new Social();
 
             social.setDatum(resultSet.getDate(2));
             social.setType(resultSet.getString(3));
@@ -38,5 +38,19 @@ public class SocialDAO
         }
 
         return socials;
+    }
+
+    public boolean insert(Social social) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO social (datum, type, bericht, filmId) VALUES (?, ?, ?, ?)"
+        );
+
+        statement.setDate(1, social.getDatum());
+        statement.setString(2, social.getType());
+        statement.setString(3, social.getBericht());
+        statement.setInt(4, social.getFilm().getId());
+
+        return statement.execute();
     }
 }

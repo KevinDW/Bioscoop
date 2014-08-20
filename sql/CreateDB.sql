@@ -187,7 +187,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS social (
   id INT NOT NULL AUTO_INCREMENT,
-  datum DATETIME NULL,
+  datum DATE NULL,
   type VARCHAR(45) NULL,
   bericht TEXT NULL,
   filmId INT NULL,

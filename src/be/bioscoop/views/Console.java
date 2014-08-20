@@ -1,6 +1,7 @@
 package be.bioscoop.views;
 
 import be.bioscoop.config.Database;
+import be.bioscoop.queues.SocialReceiver;
 import be.bioscoop.queues.SocialSender;
 
 import java.sql.*;
@@ -12,19 +13,6 @@ public class Console
     {
         fetchResources();
         fetchQueue();
-    }
-
-    private static void fetchQueue()
-    {
-        try
-        {
-            SocialSender socialSender = new SocialSender();
-            socialSender.sendMessage();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
     }
 
     private static void fetchResources()
@@ -45,12 +33,12 @@ public class Console
             Connection connection = Database.connect();
 
             PreparedStatement statement = connection.prepareStatement(
-                "SELECT zaal.zaalNr, film.naam " +
-                "FROM programmatie " +
-                "INNER JOIN film ON programmatie.filmId = film.id " +
-                "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
-                "INNER JOIN bioscoop ON zaal.bioscoopId = bioscoop.id " +
-                "WHERE bioscoop.naam = ? AND programmatie.datum BETWEEN ? AND ?"
+                    "SELECT zaal.zaalNr, film.naam " +
+                            "FROM programmatie " +
+                            "INNER JOIN film ON programmatie.filmId = film.id " +
+                            "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
+                            "INNER JOIN bioscoop ON zaal.bioscoopId = bioscoop.id " +
+                            "WHERE bioscoop.naam = ? AND programmatie.datum BETWEEN ? AND ?"
             );
 
             statement.setString(1, bioscoop);
@@ -73,6 +61,22 @@ public class Console
         catch (SQLException exception)
         {
             exception.printStackTrace();
+        }
+    }
+
+    private static void fetchQueue()
+    {
+        try
+        {
+            SocialSender socialSender = new SocialSender();
+            socialSender.sendMessage();
+
+            SocialReceiver socialReceiver = new SocialReceiver();
+            socialReceiver.receiveMessage();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }

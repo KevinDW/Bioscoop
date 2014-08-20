@@ -1,6 +1,6 @@
 package be.bioscoop.models;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Social
 {
@@ -9,11 +9,6 @@ public class Social
     private String type;
     private String bericht;
     private Film film;
-
-    public Social(int id)
-    {
-        this.id = id;
-    }
 
     public int getId()
     {

@@ -1,7 +1,6 @@
 package be.bioscoop.queues;
 
-import org.apache.activemq.*;
-
+import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
@@ -29,10 +28,18 @@ public class SocialSender
         // Non-Persistent: berichten niet door de queue naar disk worden geschreven
         producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
-        TextMessage message = session.createTextMessage();
-        message.setText("Dit is een test!");
+        TextMessage textMessage = session.createTextMessage(new SocialGenerator().createXml());
 
         // Bericht verzenden naar de queue
-        producer.send(message);
+        producer.send(textMessage);
+
+        // Sluit producer
+        producer.close();
+
+        // Sluit sessie
+        session.close();
+
+        // Sluit connectie
+        connection.close();
     }
 }
