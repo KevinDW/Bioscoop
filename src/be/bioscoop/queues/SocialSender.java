@@ -22,9 +22,11 @@ public class SocialSender
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
         // Create the destination queue (or retrieve it, if it already exists)
+        // Name: TEST.SENDRECEIVE
         Destination destination = session.createQueue("TEST.SENDRECEIVE");
 
         // Create a MessageProducer for the Destination
+        // Non-Persistant: berichten niet door de queue naar disk worden geschreven
         MessageProducer producer = session.createProducer(destination);
         producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
     }
