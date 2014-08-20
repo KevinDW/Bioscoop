@@ -19,6 +19,14 @@ public class Social
         this.film = film;
     }
 
+    public Social(Date datum, String type, String bericht, Film film)
+    {
+        this.datum = datum;
+        this.type = type;
+        this.bericht = bericht;
+        this.film = film;
+    }
+
     public int getId()
     {
         return id;
