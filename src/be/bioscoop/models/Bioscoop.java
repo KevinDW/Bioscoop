@@ -17,6 +17,14 @@ public class Bioscoop
         this.gemeente = gemeente;
     }
 
+    public Bioscoop(String naam, String straat, String postcode, String gemeente)
+    {
+        this.naam = naam;
+        this.straat = straat;
+        this.postcode = postcode;
+        this.gemeente = gemeente;
+    }
+
     public int getId()
     {
         return id;

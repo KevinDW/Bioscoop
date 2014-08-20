@@ -21,6 +21,16 @@ public class Zaal
         this.bioscoop = bioscoop;
     }
 
+    public Zaal(int zaalNr, int capaciteit, String maxRij, int maxKolom, int verdieping, Bioscoop bioscoop)
+    {
+        this.zaalNr = zaalNr;
+        this.capaciteit = capaciteit;
+        this.maxRij = maxRij;
+        this.maxKolom = maxKolom;
+        this.verdieping = verdieping;
+        this.bioscoop = bioscoop;
+    }
+
     public int getId()
     {
         return id;

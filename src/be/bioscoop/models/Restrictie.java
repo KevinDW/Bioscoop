@@ -11,6 +11,11 @@ public class Restrictie
         this.naam = naam;
     }
 
+    public Restrictie(String naam)
+    {
+        this.naam = naam;
+    }
+
     public int getId()
     {
         return id;

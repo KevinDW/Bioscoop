@@ -13,6 +13,12 @@ public class Klant
         this.email = email;
     }
 
+    public Klant(String naam, String email)
+    {
+        this.naam = naam;
+        this.email = email;
+    }
+
     public int getId()
     {
         return id;

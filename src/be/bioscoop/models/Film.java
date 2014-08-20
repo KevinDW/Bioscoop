@@ -23,6 +23,17 @@ public class Film
         this.genre = genre;
     }
 
+    public Film(String naam, String code, int jaar, int duur, double beoordeling, Restrictie restrictie, Genre genre)
+    {
+        this.naam = naam;
+        this.code = code;
+        this.jaar = jaar;
+        this.duur = duur;
+        this.beoordeling = beoordeling;
+        this.restrictie = restrictie;
+        this.genre = genre;
+    }
+
     public int getId()
     {
         return id;

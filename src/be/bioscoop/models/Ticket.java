@@ -15,6 +15,14 @@ public class Ticket
         this.barcode = barcode;
     }
 
+    public Ticket(double prijs, Programmatie programmatie, Barcode barcode)
+    {
+        this.prijs = prijs;
+        this.programmatie = programmatie;
+        this.barcode = barcode;
+    }
+
+
     public int getId()
     {
         return id;

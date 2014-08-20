@@ -13,6 +13,12 @@ public class Barcode
         this.gebruikt = gebruikt;
     }
 
+    public Barcode(String code, boolean gebruikt)
+    {
+        this.code = code;
+        this.gebruikt = gebruikt;
+    }
+
     public int getId()
     {
         return id;

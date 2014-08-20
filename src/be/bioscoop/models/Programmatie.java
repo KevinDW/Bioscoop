@@ -20,6 +20,14 @@ public class Programmatie
         this.film = film;
     }
 
+    public Programmatie(Date datum, Time beginUur, Zaal zaal, Film film)
+    {
+        this.datum = datum;
+        this.beginUur = beginUur;
+        this.zaal = zaal;
+        this.film = film;
+    }
+
     public int getId()
     {
         return id;

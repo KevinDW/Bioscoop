@@ -13,6 +13,12 @@ public class Bestelling
         this.ticket = ticket;
     }
 
+    public Bestelling(Klant klant, Ticket ticket)
+    {
+        this.klant = klant;
+        this.ticket = ticket;
+    }
+
     public int getId()
     {
         return id;
