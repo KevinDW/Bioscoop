@@ -11,34 +11,34 @@ public class Console
 {
     public static void main(String[] args)
     {
-        fetchResources();
-        fetchQueue();
+        programmatiesVoorBepaaldeBioscoop();
+        socialeBerichtenOpQueue();
     }
 
-    private static void fetchResources()
+    private static void programmatiesVoorBepaaldeBioscoop()
     {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Bioscoop: ");
+        String bioscoop = scanner.nextLine();
+
+        System.out.print("Begindatum (yyyy-mm-dd): ");
+        Date beginDatum = Date.valueOf(scanner.nextLine());
+
+        System.out.print("Einddatum (yyyy-mm-dd): ");
+        Date eindDatum = Date.valueOf(scanner.nextLine());
+
         try
         {
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.print("Bioscoop: ");
-            String bioscoop = scanner.nextLine();
-
-            System.out.print("Begindatum (yyyy-mm-dd): ");
-            Date beginDatum = Date.valueOf(scanner.nextLine());
-
-            System.out.print("Einddatum (yyyy-mm-dd): ");
-            Date eindDatum = Date.valueOf(scanner.nextLine());
-
             Connection connection = Database.connect();
 
             PreparedStatement statement = connection.prepareStatement(
-                    "SELECT zaal.zaalNr, film.naam " +
-                            "FROM programmatie " +
-                            "INNER JOIN film ON programmatie.filmId = film.id " +
-                            "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
-                            "INNER JOIN bioscoop ON zaal.bioscoopId = bioscoop.id " +
-                            "WHERE bioscoop.naam = ? AND programmatie.datum BETWEEN ? AND ?"
+                "SELECT zaal.zaalNr, film.naam " +
+                "FROM programmatie " +
+                "INNER JOIN film ON programmatie.filmId = film.id " +
+                "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
+                "INNER JOIN bioscoop ON zaal.bioscoopId = bioscoop.id " +
+                "WHERE bioscoop.naam = ? AND programmatie.datum BETWEEN ? AND ?"
             );
 
             statement.setString(1, bioscoop);
@@ -64,14 +64,14 @@ public class Console
         }
     }
 
-    private static void fetchQueue()
+    private static void socialeBerichtenOpQueue()
     {
         try
         {
             SocialSender socialSender = new SocialSender();
-            socialSender.sendMessage();
-
             SocialReceiver socialReceiver = new SocialReceiver();
+
+            socialSender.sendMessage();
             socialReceiver.receiveMessage();
         }
         catch (Exception e)
