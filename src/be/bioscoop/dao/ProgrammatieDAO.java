@@ -63,7 +63,7 @@ public class ProgrammatieDAO
     public List<Programmatie> programmatiesVoorBepaaldeBioscoopTussenTweeDatums(String bioscoop, Date beginDatum, Date eindDatum) throws SQLException
     {
         PreparedStatement statement = connection.prepareStatement(
-            "SELECT zaal.zaalNr, film.naam " +
+            "SELECT programmatie.id, programmatie.datum, programmatie.beginUur, programmatie.zaalId, programmatie.filmid" +
             "FROM programmatie " +
             "INNER JOIN film ON programmatie.filmId = film.id " +
             "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
