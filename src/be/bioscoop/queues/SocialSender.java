@@ -17,6 +17,8 @@ public class SocialSender
         connection.start();
 
         // Create a Session that allows you to work with activeMQ
+        //False will create a non-transactional session object
+        //True will use transactions
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
         // Create the destination queue (or retrieve it, if it already exists)

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<social xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="file:/C:">
+
+    <message>
+        <datum>2014-08-10</datum>
+        <type>Twitter</type>
+        <bericht>Mooie film! #Lucy</bericht>
+        <film>
+            <naam>Lucy</naam>
+            <code>LUCY</code>
+            <duur>100</duur>
+            <beoordeling>7</beoordeling>
+            <datum>2014-07-31</datum>
+            <restrictie>16</restrictie>
+            <genre>Action</genre>
+        </film>
+
+
+    </message>
+
+</social>
+
