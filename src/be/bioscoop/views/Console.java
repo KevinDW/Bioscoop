@@ -2,21 +2,26 @@ package be.bioscoop.views;
 
 import be.bioscoop.config.Database;
 import be.bioscoop.dao.ProgrammatieDAO;
+import be.bioscoop.models.*;
 import be.bioscoop.queues.SocialReceiver;
 import be.bioscoop.queues.SocialSender;
+import org.jdom.JDOMException;
 
+import javax.jms.JMSException;
+import java.io.IOException;
 import java.sql.*;
+import java.util.List;
 import java.util.Scanner;
 
 public class Console
 {
     public static void main(String[] args)
     {
-        programmatiesVoorBepaaldeBioscoop();
-        socialeBerichtenOpQueue();
+        // programmatiesVoorBepaaldeBioscoopTussenTweeDatums();
+        // socialeBerichtenOpQueue();
     }
 
-    private static void programmatiesVoorBepaaldeBioscoop()
+    private static void programmatiesVoorBepaaldeBioscoopTussenTweeDatums()
     {
         Scanner scanner = new Scanner(System.in);
 
@@ -34,13 +39,13 @@ public class Console
             Connection connection = Database.connect();
 
             ProgrammatieDAO programmatieDAO = new ProgrammatieDAO(connection);
-            programmatieDAO.programmatiesVoorBepaaldeBioscoopTussenTweeDatums(bioscoop, beginDatum, eindDatum);
+            List<Programmatie> programmaties = programmatieDAO.programmatiesVoorBepaaldeBioscoopTussenTweeDatums(bioscoop, beginDatum, eindDatum);
 
             Database.close();
         }
         catch (SQLException exception)
         {
-            exception.printStackTrace();
+            exception.getMessage();
         }
     }
 
@@ -49,14 +54,26 @@ public class Console
         try
         {
             SocialSender socialSender = new SocialSender();
-            SocialReceiver socialReceiver = new SocialReceiver();
-
             socialSender.sendMessage();
+
+            SocialReceiver socialReceiver = new SocialReceiver();
             socialReceiver.receiveMessage();
         }
-        catch (Exception e)
+        catch (JDOMException exception)
         {
-            e.printStackTrace();
+            exception.getMessage();
+        }
+        catch (JMSException exception)
+        {
+            exception.getMessage();
+        }
+        catch (IOException exception)
+        {
+            exception.getMessage();
+        }
+        catch (SQLException exception)
+        {
+            exception.getMessage();
         }
     }
 }
