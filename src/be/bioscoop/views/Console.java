@@ -10,6 +10,25 @@ public class Console
 {
     public static void main(String[] args)
     {
+        fetchResources();
+        fetchQueue();
+    }
+
+    private static void fetchQueue()
+    {
+        try
+        {
+            SocialSender socialSender = new SocialSender();
+            socialSender.sendMessage();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private static void fetchResources()
+    {
         try
         {
             Scanner scanner = new Scanner(System.in);
@@ -55,17 +74,5 @@ public class Console
         {
             exception.printStackTrace();
         }
-
-        try
-        {
-            SocialSender socialSender = new SocialSender();
-            socialSender.sendMessage();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-
     }
 }

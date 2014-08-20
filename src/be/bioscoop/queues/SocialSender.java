@@ -7,34 +7,32 @@ import javax.jms.*;
 
 public class SocialSender
 {
-    public SocialSender() {}
-
     public void sendMessage() throws Exception
     {
-        // Create a connection to ActiveMQ
+        // Connecteren naar ActiveMQ
         Connection connection = new ActiveMQConnectionFactory("tcp://192.168.20.200:61616").createConnection();
 
-        // Start connection
+        // Connectie starten
         connection.start();
 
-        // Create a Session that allows you to work with activeMQ
-        // -> false will create a non-transactional session object
-        // -> true will use transactions
+        // Start een sessie om met ActiveMQ te werken
+        // -> false = geen transacties
+        // -> true = transacties
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-        // Create the destination queue (or retrieve it, if it already exists)
+        // Maak een nieuwe queue aan (of krijg de reeds aangemaakte terug)
         Destination destination = session.createQueue("TEST.SENDRECEIVE");
 
-        // Create a MessageProducer for the Destination
+        // Maak een producer aan die berichten naar de queue verzendt
         MessageProducer producer = session.createProducer(destination);
 
-        // Non-Persistant: berichten niet door de queue naar disk worden geschreven
+        // Non-Persistent: berichten niet door de queue naar disk worden geschreven
         producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
         TextMessage message = session.createTextMessage();
         message.setText("Dit is een test!");
 
-        // Send message to queue
+        // Bericht verzenden naar de queue
         producer.send(message);
     }
 }
