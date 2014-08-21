@@ -17,8 +17,8 @@ public class Console
 {
     public static void main(String[] args)
     {
-        // programmatiesVoorBepaaldeBioscoopTussenTweeDatums();
-        // socialeBerichtenOpQueue();
+        programmatiesVoorBepaaldeBioscoopTussenTweeDatums();
+        socialeBerichtenOpQueue();
     }
 
     private static void programmatiesVoorBepaaldeBioscoopTussenTweeDatums()
