@@ -49,7 +49,7 @@ public class FilmDAO
     public Film get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam, code, datum, duur, beoordeling, genreId, restrictieId FROM film WHERE id = ?"
+            "SELECT id, naam, code, jaar, duur, beoordeling, genreId, restrictieId FROM film WHERE id = ?"
         );
 
         statement.setInt(1, id);

@@ -44,7 +44,7 @@ public class KlantDAO
     public Klant get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam, email FROM film WHERE id = ?"
+            "SELECT id, naam, email FROM klant WHERE id = ?"
         );
 
         statement.setInt(1, id);

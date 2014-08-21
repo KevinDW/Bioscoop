@@ -60,7 +60,7 @@ public class SocialDAO
     public Social get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, datum, type, bericht, filmId FROM film WHERE id = ?"
+            "SELECT id, datum, type, bericht, filmId FROM social WHERE id = ?"
         );
 
         statement.setInt(1, id);

@@ -45,7 +45,7 @@ public class TicketDAO
     public Ticket get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, prijs, programmatieId, barcodeId FROM film WHERE id = ?"
+            "SELECT id, prijs, programmatieId, barcodeId FROM ticket WHERE id = ?"
         );
 
         statement.setInt(1, id);

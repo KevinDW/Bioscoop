@@ -44,7 +44,7 @@ public class BestellingDAO
     public Bestelling get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, klantId, ticketId FROM film WHERE id = ?"
+            "SELECT id, klantId, ticketId FROM bestelling WHERE id = ?"
         );
 
         statement.setInt(1, id);

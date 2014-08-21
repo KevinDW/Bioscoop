@@ -5,12 +5,12 @@ public class Zaal
     private int id;
     private int zaalNr;
     private int capaciteit;
-    private String maxRij;
+    private int maxRij;
     private int maxKolom;
     private int verdieping;
     private Bioscoop bioscoop;
 
-    public Zaal(int id, int zaalNr, int capaciteit, String maxRij, int maxKolom, int verdieping, Bioscoop bioscoop)
+    public Zaal(int id, int zaalNr, int capaciteit, int maxRij, int maxKolom, int verdieping, Bioscoop bioscoop)
     {
         this.id = id;
         this.zaalNr = zaalNr;
@@ -21,7 +21,7 @@ public class Zaal
         this.bioscoop = bioscoop;
     }
 
-    public Zaal(int zaalNr, int capaciteit, String maxRij, int maxKolom, int verdieping, Bioscoop bioscoop)
+    public Zaal(int zaalNr, int capaciteit, int maxRij, int maxKolom, int verdieping, Bioscoop bioscoop)
     {
         this.zaalNr = zaalNr;
         this.capaciteit = capaciteit;
@@ -61,12 +61,12 @@ public class Zaal
         this.capaciteit = capaciteit;
     }
 
-    public String getMaxRij()
+    public int getMaxRij()
     {
         return maxRij;
     }
 
-    public void setMaxRij(String maxRij)
+    public void setMaxRij(int maxRij)
     {
         this.maxRij = maxRij;
     }

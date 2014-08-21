@@ -38,7 +38,7 @@ public class BarcodeDAO
     public Barcode get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, code, gebruikt FROM film WHERE id = ?"
+            "SELECT id, code, gebruikt FROM barcode WHERE id = ?"
         );
 
         statement.setInt(1, id);

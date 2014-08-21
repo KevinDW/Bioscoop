@@ -42,7 +42,7 @@ public class RestrictieDAO
     public Restrictie get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam FROM film WHERE id = ?"
+            "SELECT id, naam FROM restrictie WHERE id = ?"
         );
 
         statement.setInt(1, id);

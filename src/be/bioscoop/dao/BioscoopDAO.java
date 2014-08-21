@@ -46,7 +46,7 @@ public class BioscoopDAO
     public Bioscoop get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam, straat, postcode, gemeente FROM film WHERE id = ?"
+            "SELECT id, naam, straat, postcode, gemeente FROM bioscoop WHERE id = ?"
         );
 
         statement.setInt(1, id);

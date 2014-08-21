@@ -43,7 +43,7 @@ public class ProgrammatieDAO
     public Programmatie get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, datum, beginuur, zaalId, filmId FROM film WHERE id = ?"
+            "SELECT id, datum, beginuur, zaalId, filmId FROM programmatie WHERE id = ?"
         );
 
         statement.setInt(1, id);
@@ -89,6 +89,11 @@ public class ProgrammatieDAO
                     new FilmDAO(this.connection).get(resultSet.getInt(5))
                 )
             );
+        }
+
+        for (Programmatie programmatie : programmaties)
+        {
+            System.out.println(programmatie.getDatum());
         }
 
         return programmaties;

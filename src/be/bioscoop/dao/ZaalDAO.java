@@ -34,7 +34,7 @@ public class ZaalDAO
                     resultSet.getInt(1),
                     resultSet.getInt(2),
                     resultSet.getInt(3),
-                    resultSet.getString(4),
+                    resultSet.getInt(4),
                     resultSet.getInt(5),
                     resultSet.getInt(6),
                     new BioscoopDAO(this.connection).get(resultSet.getInt(2))
@@ -48,7 +48,7 @@ public class ZaalDAO
     public Zaal get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, zaalnr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId FROM film WHERE id = ?"
+            "SELECT id, zaalnr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId FROM zaal WHERE id = ?"
         );
 
         statement.setInt(1, id);
@@ -60,7 +60,7 @@ public class ZaalDAO
             resultSet.getInt(1),
             resultSet.getInt(2),
             resultSet.getInt(3),
-            resultSet.getString(4),
+            resultSet.getInt(4),
             resultSet.getInt(5),
             resultSet.getInt(6),
             new BioscoopDAO(this.connection).get(resultSet.getInt(2))

@@ -1,7 +1,7 @@
 package be.bioscoop.views;
 
 import be.bioscoop.config.Database;
-import be.bioscoop.dao.ProgrammatieDAO;
+import be.bioscoop.dao.*;
 import be.bioscoop.models.*;
 import be.bioscoop.queues.SocialReceiver;
 import be.bioscoop.queues.SocialSender;
@@ -40,6 +40,11 @@ public class Console
 
             ProgrammatieDAO programmatieDAO = new ProgrammatieDAO(connection);
             List<Programmatie> programmaties = programmatieDAO.programmatiesVoorBepaaldeBioscoopTussenTweeDatums(bioscoop, beginDatum, eindDatum);
+
+            for (Programmatie programmatie : programmaties)
+            {
+                System.out.println(programmatie);
+            }
 
             Database.close();
         }
