@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Genre;
+import be.bioscoop.entities.Genre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +42,7 @@ public class GenreDAO implements DAOInterface<Genre>
         return restricties;
     }
 
-    public Genre get(int id) throws SQLException
+    public Genre find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, naam " +

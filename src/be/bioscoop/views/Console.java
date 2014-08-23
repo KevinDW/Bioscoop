@@ -2,7 +2,7 @@ package be.bioscoop.views;
 
 import be.bioscoop.config.Database;
 import be.bioscoop.dao.*;
-import be.bioscoop.models.*;
+import be.bioscoop.entities.*;
 import be.bioscoop.queues.SocialReceiver;
 import be.bioscoop.queues.SocialSender;
 import org.jdom.JDOMException;

@@ -1,4 +1,4 @@
-package be.bioscoop.queues;
+package be.bioscoop.generators;
 
 import org.jdom.Document;
 import org.jdom.Element;

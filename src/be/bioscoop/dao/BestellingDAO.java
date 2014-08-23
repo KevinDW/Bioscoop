@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Bestelling;
+import be.bioscoop.entities.Bestelling;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,8 +34,8 @@ public class BestellingDAO implements DAOInterface<Bestelling>
             bestellingen.add(
                 new Bestelling(
                     resultSet.getInt(1),
-                    new KlantDAO(this.connection).get(resultSet.getInt(2)),
-                    new TicketDAO(this.connection).get(resultSet.getInt(3))
+                    new KlantDAO(this.connection).find(resultSet.getInt(2)),
+                    new TicketDAO(this.connection).find(resultSet.getInt(3))
                 )
             );
         }
@@ -43,7 +43,7 @@ public class BestellingDAO implements DAOInterface<Bestelling>
         return bestellingen;
     }
 
-    public Bestelling get(int id) throws SQLException
+    public Bestelling find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, klantId, ticketId " +
@@ -58,8 +58,8 @@ public class BestellingDAO implements DAOInterface<Bestelling>
 
         return new Bestelling(
             resultSet.getInt(1),
-            new KlantDAO(this.connection).get(resultSet.getInt(2)),
-            new TicketDAO(this.connection).get(resultSet.getInt(3))
+            new KlantDAO(this.connection).find(resultSet.getInt(2)),
+            new TicketDAO(this.connection).find(resultSet.getInt(3))
         );
     }
 

@@ -1,29 +1,30 @@
-package be.bioscoop.models;
+package be.bioscoop.entities;
 
 import java.sql.Date;
+import java.sql.Time;
 
-public class Social
+public class Programmatie
 {
     private int id;
     private Date datum;
-    private String type;
-    private String bericht;
+    private Time beginUur;
+    private Zaal zaal;
     private Film film;
 
-    public Social(int id, Date datum, String type, String bericht, Film film)
+    public Programmatie(int id, Date datum, Time beginUur, Zaal zaal, Film film)
     {
         this.id = id;
         this.datum = datum;
-        this.type = type;
-        this.bericht = bericht;
+        this.beginUur = beginUur;
+        this.zaal = zaal;
         this.film = film;
     }
 
-    public Social(Date datum, String type, String bericht, Film film)
+    public Programmatie(Date datum, Time beginUur, Zaal zaal, Film film)
     {
         this.datum = datum;
-        this.type = type;
-        this.bericht = bericht;
+        this.beginUur = beginUur;
+        this.zaal = zaal;
         this.film = film;
     }
 
@@ -47,24 +48,24 @@ public class Social
         this.datum = datum;
     }
 
-    public String getType()
+    public Time getBeginUur()
     {
-        return type;
+        return beginUur;
     }
 
-    public void setType(String type)
+    public void setBeginUur(Time beginUur)
     {
-        this.type = type;
+        this.beginUur = beginUur;
     }
 
-    public String getBericht()
+    public Zaal getZaal()
     {
-        return bericht;
+        return zaal;
     }
 
-    public void setBericht(String bericht)
+    public void setZaal(Zaal zaal)
     {
-        this.bericht = bericht;
+        this.zaal = zaal;
     }
 
     public Film getFilm()

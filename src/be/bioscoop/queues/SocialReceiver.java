@@ -3,7 +3,7 @@ package be.bioscoop.queues;
 import be.bioscoop.config.Database;
 import be.bioscoop.dao.FilmDAO;
 import be.bioscoop.dao.SocialDAO;
-import be.bioscoop.models.Social;
+import be.bioscoop.entities.Social;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.jdom.Document;
@@ -59,7 +59,7 @@ public class SocialReceiver
                     Date.valueOf(element.getChildText("Datum")),
                     element.getChildText("Type"),
                     element.getChildText("Bericht"),
-                    filmDAO.get(Integer.parseInt(element.getChildText("Film")))
+                    filmDAO.find(Integer.parseInt(element.getChildText("Film")))
                 )
             );
         }

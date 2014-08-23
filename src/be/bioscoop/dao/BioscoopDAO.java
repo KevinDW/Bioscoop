@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Bioscoop;
+import be.bioscoop.entities.Bioscoop;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -45,7 +45,7 @@ public class BioscoopDAO implements DAOInterface<Bioscoop>
         return bioscopen;
     }
 
-    public Bioscoop get(int id) throws SQLException
+    public Bioscoop find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, naam, straat, postcode, gemeente " +

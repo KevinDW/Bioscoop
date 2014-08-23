@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Restrictie;
+import be.bioscoop.entities.Restrictie;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -41,7 +41,7 @@ public class RestrictieDAO implements DAOInterface<Restrictie>
         return restricties;
     }
 
-    public Restrictie get(int id) throws SQLException
+    public Restrictie find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, naam " +

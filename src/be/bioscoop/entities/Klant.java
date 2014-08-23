@@ -1,19 +1,22 @@
-package be.bioscoop.models;
+package be.bioscoop.entities;
 
-public class Genre
+public class Klant
 {
     private int id;
     private String naam;
+    private String email;
 
-    public Genre(int id, String naam)
+    public Klant(int id, String naam, String email)
     {
         this.id = id;
         this.naam = naam;
+        this.email = email;
     }
 
-    public Genre(String naam)
+    public Klant(String naam, String email)
     {
         this.naam = naam;
+        this.email = email;
     }
 
     public int getId()
@@ -34,5 +37,15 @@ public class Genre
     public void setNaam(String naam)
     {
         this.naam = naam;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
     }
 }

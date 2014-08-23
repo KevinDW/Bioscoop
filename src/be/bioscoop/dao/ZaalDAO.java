@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Zaal;
+import be.bioscoop.entities.Zaal;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,7 +39,7 @@ public class ZaalDAO implements DAOInterface<Zaal>
                     resultSet.getInt(4),
                     resultSet.getInt(5),
                     resultSet.getInt(6),
-                    new BioscoopDAO(this.connection).get(resultSet.getInt(2))
+                    new BioscoopDAO(this.connection).find(resultSet.getInt(2))
                 )
             );
         }
@@ -47,7 +47,7 @@ public class ZaalDAO implements DAOInterface<Zaal>
         return zalen;
     }
 
-    public Zaal get(int id) throws SQLException
+    public Zaal find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, zaalnr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId " +
@@ -67,7 +67,7 @@ public class ZaalDAO implements DAOInterface<Zaal>
             resultSet.getInt(4),
             resultSet.getInt(5),
             resultSet.getInt(6),
-            new BioscoopDAO(this.connection).get(resultSet.getInt(2))
+            new BioscoopDAO(this.connection).find(resultSet.getInt(2))
         );
     }
 

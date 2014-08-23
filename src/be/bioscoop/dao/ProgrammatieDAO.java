@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Programmatie;
+import be.bioscoop.entities.Programmatie;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,8 +33,8 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
                     resultSet.getInt(1),
                     resultSet.getDate(2),
                     resultSet.getTime(3),
-                    new ZaalDAO(this.connection).get(resultSet.getInt(4)),
-                    new FilmDAO(this.connection).get(resultSet.getInt(5))
+                    new ZaalDAO(this.connection).find(resultSet.getInt(4)),
+                    new FilmDAO(this.connection).find(resultSet.getInt(5))
                 )
             );
         }
@@ -42,7 +42,7 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
         return programmaties;
     }
 
-    public Programmatie get(int id) throws SQLException
+    public Programmatie find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, datum, beginuur, zaalId, filmId " +
@@ -59,8 +59,8 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
             resultSet.getInt(1),
             resultSet.getDate(2),
             resultSet.getTime(3),
-            new ZaalDAO(this.connection).get(resultSet.getInt(4)),
-            new FilmDAO(this.connection).get(resultSet.getInt(5))
+            new ZaalDAO(this.connection).find(resultSet.getInt(4)),
+            new FilmDAO(this.connection).find(resultSet.getInt(5))
         );
     }
 
@@ -105,8 +105,8 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
                     resultSet.getInt(1),
                     resultSet.getDate(2),
                     resultSet.getTime(3),
-                    new ZaalDAO(this.connection).get(resultSet.getInt(4)),
-                    new FilmDAO(this.connection).get(resultSet.getInt(5))
+                    new ZaalDAO(this.connection).find(resultSet.getInt(4)),
+                    new FilmDAO(this.connection).find(resultSet.getInt(5))
                 )
             );
         }

@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Barcode;
+import be.bioscoop.entities.Barcode;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,7 +37,7 @@ public class BarcodeDAO implements DAOInterface<Barcode>
         return barcodes;
     }
 
-    public Barcode get(int id) throws SQLException
+    public Barcode find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, code, gebruikt " +
@@ -66,6 +66,33 @@ public class BarcodeDAO implements DAOInterface<Barcode>
 
         statement.setString(1, barcode.getCode());
         statement.setBoolean(2, barcode.isGebruikt());
+
+        return statement.execute();
+    }
+
+    public boolean update(Barcode barcode) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE barcode " +
+            "SET code = ?, gebruikt = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setString(1, barcode.getCode());
+        statement.setBoolean(2, barcode.isGebruikt());
+        statement.setInt(3, barcode.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Barcode barcode) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM barcode " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, barcode.getId());
 
         return statement.execute();
     }

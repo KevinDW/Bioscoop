@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Social;
+import be.bioscoop.entities.Social;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,7 +37,7 @@ public class SocialDAO implements DAOInterface<Social>
                     resultSet.getDate(2),
                     resultSet.getString(3),
                     resultSet.getString(4),
-                    new FilmDAO(this.connection).get(resultSet.getInt(5))
+                    new FilmDAO(this.connection).find(resultSet.getInt(5))
                 )
             );
         }
@@ -45,7 +45,7 @@ public class SocialDAO implements DAOInterface<Social>
         return socials;
     }
 
-    public Social get(int id) throws SQLException
+    public Social find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, datum, type, bericht, filmId " +
@@ -63,7 +63,7 @@ public class SocialDAO implements DAOInterface<Social>
             resultSet.getDate(2),
             resultSet.getString(3),
             resultSet.getString(4),
-            new FilmDAO(this.connection).get(resultSet.getInt(5))
+            new FilmDAO(this.connection).find(resultSet.getInt(5))
         );
     }
 

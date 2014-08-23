@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Klant;
+import be.bioscoop.entities.Klant;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -43,7 +43,7 @@ public class KlantDAO implements DAOInterface<Klant>
         return klanten;
     }
 
-    public Klant get(int id) throws SQLException
+    public Klant find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, naam, email " +

@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Film;
+import be.bioscoop.entities.Film;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,8 +39,8 @@ public class FilmDAO implements DAOInterface<Film>
                     resultSet.getInt(4),
                     resultSet.getInt(5),
                     resultSet.getDouble(6),
-                    new RestrictieDAO(this.connection).get(resultSet.getInt(7)),
-                    new GenreDAO(this.connection).get(resultSet.getInt(8))
+                    new RestrictieDAO(this.connection).find(resultSet.getInt(7)),
+                    new GenreDAO(this.connection).find(resultSet.getInt(8))
                 )
             );
         }
@@ -48,7 +48,7 @@ public class FilmDAO implements DAOInterface<Film>
         return films;
     }
 
-    public Film get(int id) throws SQLException
+    public Film find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, naam, code, jaar, duur, beoordeling, genreId, restrictieId " +
@@ -68,8 +68,8 @@ public class FilmDAO implements DAOInterface<Film>
             resultSet.getInt(4),
             resultSet.getInt(5),
             resultSet.getDouble(6),
-            new RestrictieDAO(this.connection).get(resultSet.getInt(7)),
-            new GenreDAO(this.connection).get(resultSet.getInt(8))
+            new RestrictieDAO(this.connection).find(resultSet.getInt(7)),
+            new GenreDAO(this.connection).find(resultSet.getInt(8))
         );
     }
 

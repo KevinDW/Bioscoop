@@ -1,5 +1,6 @@
 package be.bioscoop.queues;
 
+import be.bioscoop.generators.SocialGenerator;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;

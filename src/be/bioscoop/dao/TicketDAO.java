@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Ticket;
+import be.bioscoop.entities.Ticket;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,8 +35,8 @@ public class TicketDAO implements DAOInterface<Ticket>
                 new Ticket(
                     resultSet.getInt(1),
                     resultSet.getDouble(2),
-                    new ProgrammatieDAO(this.connection).get(resultSet.getInt(3)),
-                    new BarcodeDAO(this.connection).get(resultSet.getInt(4))
+                    new ProgrammatieDAO(this.connection).find(resultSet.getInt(3)),
+                    new BarcodeDAO(this.connection).find(resultSet.getInt(4))
                 )
             );
         }
@@ -44,7 +44,7 @@ public class TicketDAO implements DAOInterface<Ticket>
         return tickets;
     }
 
-    public Ticket get(int id) throws SQLException
+    public Ticket find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, prijs, programmatieId, barcodeId " +
@@ -60,8 +60,8 @@ public class TicketDAO implements DAOInterface<Ticket>
         return new Ticket(
             resultSet.getInt(1),
             resultSet.getDouble(2),
-            new ProgrammatieDAO(this.connection).get(resultSet.getInt(3)),
-            new BarcodeDAO(this.connection).get(resultSet.getInt(4))
+            new ProgrammatieDAO(this.connection).find(resultSet.getInt(3)),
+            new BarcodeDAO(this.connection).find(resultSet.getInt(4))
         );
     }
 
