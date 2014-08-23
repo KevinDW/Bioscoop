@@ -111,13 +111,13 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
     public List<Programmatie> whereBioscoopAndDateBetween(String bioscoop, Date beginDatum, Date eindDatum) throws SQLException
     {
         PreparedStatement statement = connection.prepareStatement(
-                "SELECT p.id, p.datum, p.beginUur, p.zaalId, p.filmid" +
-                        "FROM programmatie AS p " +
-                        "INNER JOIN film AS f ON p.filmId = f.id " +
-                        "INNER JOIN zaal AS z ON p.zaalId = z.id " +
-                        "INNER JOIN bioscoop AS b ON z.bioscoopId = b.id " +
-                        "WHERE b.naam = ? " +
-                        "AND p.datum BETWEEN ? AND ?"
+            "SELECT p.id, p.datum, p.beginUur, p.zaalId, p.filmid" +
+            "FROM programmatie AS p " +
+            "INNER JOIN film AS f ON p.filmId = f.id " +
+            "INNER JOIN zaal AS z ON p.zaalId = z.id " +
+            "INNER JOIN bioscoop AS b ON z.bioscoopId = b.id " +
+            "WHERE b.naam = ? " +
+            "AND p.datum BETWEEN ? AND ?"
         );
 
         statement.setString(1, bioscoop);
@@ -130,13 +130,13 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
         while (resultSet.next())
         {
             programmaties.add(
-                    new Programmatie(
-                            resultSet.getInt(1),
-                            resultSet.getDate(2),
-                            resultSet.getTime(3),
-                            new ZaalDAO(this.connection).find(resultSet.getInt(4)),
-                            new FilmDAO(this.connection).find(resultSet.getInt(5))
-                    )
+                new Programmatie(
+                    resultSet.getInt(1),
+                    resultSet.getDate(2),
+                    resultSet.getTime(3),
+                    new ZaalDAO(this.connection).find(resultSet.getInt(4)),
+                    new FilmDAO(this.connection).find(resultSet.getInt(5))
+                )
             );
         }
 
