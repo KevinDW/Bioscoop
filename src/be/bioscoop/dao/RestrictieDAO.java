@@ -71,4 +71,30 @@ public class RestrictieDAO implements DAOInterface<Restrictie>
 
         return statement.execute();
     }
+
+    public boolean update(Restrictie restrictie) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE restrictie " +
+            "SET naam = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setString(1, restrictie.getNaam());
+        statement.setInt(2, restrictie.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Restrictie restrictie) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM restrictie " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, restrictie.getId());
+
+        return statement.execute();
+    }
 }

@@ -81,4 +81,33 @@ public class BioscoopDAO implements DAOInterface<Bioscoop>
 
         return statement.execute();
     }
+
+    public boolean update(Bioscoop bioscoop) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE bioscoop " +
+            "SET naam = ?, straat = ?, postcode = ?, gemeente = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setString(1, bioscoop.getNaam());
+        statement.setString(2, bioscoop.getStraat());
+        statement.setString(3, bioscoop.getPostcode());
+        statement.setString(4, bioscoop.getGemeente());
+        statement.setInt(5, bioscoop.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Bioscoop bioscoop) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM bioscoop " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, bioscoop.getId());
+
+        return statement.execute();
+    }
 }

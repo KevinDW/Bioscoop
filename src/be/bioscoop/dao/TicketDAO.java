@@ -78,4 +78,32 @@ public class TicketDAO implements DAOInterface<Ticket>
 
         return statement.execute();
     }
+
+    public boolean update(Ticket ticket) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE ticket " +
+            "SET prijs = ?, programmatieId = ?, barcodeId = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setDouble(1, ticket.getPrijs());
+        statement.setInt(2, ticket.getProgrammatie().getId());
+        statement.setInt(3, ticket.getBarcode().getId());
+        statement.setInt(4, ticket.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Ticket ticket) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM ticket " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, ticket.getId());
+
+        return statement.execute();
+    }
 }

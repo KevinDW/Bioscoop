@@ -72,4 +72,30 @@ public class GenreDAO implements DAOInterface<Genre>
 
         return statement.execute();
     }
+
+    public boolean update(Genre genre) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE genre " +
+            "SET naam = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setString(1, genre.getNaam());
+        statement.setInt(2, genre.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Genre genre) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM genre " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, genre.getId());
+
+        return statement.execute();
+    }
 }

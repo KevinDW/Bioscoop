@@ -75,4 +75,31 @@ public class BestellingDAO implements DAOInterface<Bestelling>
 
         return statement.execute();
     }
+
+    public boolean update(Bestelling bestelling) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE bestelling " +
+            "SET klantId = ?, ticketId = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, bestelling.getKlant().getId());
+        statement.setInt(2, bestelling.getTicket().getId());
+        statement.setInt(3, bestelling.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Bestelling bestelling) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM bestelling " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, bestelling.getId());
+
+        return statement.execute();
+    }
 }

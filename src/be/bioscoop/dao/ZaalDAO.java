@@ -87,4 +87,35 @@ public class ZaalDAO implements DAOInterface<Zaal>
 
         return statement.execute();
     }
+
+    public boolean update(Zaal zaal) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE zaal " +
+            "SET zaalNr = ?, capaciteit = ?, maxRij = ?, maxKolom = ?, verdieping = ?, bioscoopId = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, zaal.getZaalNr());
+        statement.setInt(2, zaal.getCapaciteit());
+        statement.setInt(3, zaal.getMaxRij());
+        statement.setInt(4, zaal.getMaxKolom());
+        statement.setInt(5, zaal.getVerdieping());
+        statement.setInt(6, zaal.getBioscoop().getId());
+        statement.setInt(7, zaal.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Zaal zaal) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM zaal " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, zaal.getId());
+
+        return statement.execute();
+    }
 }

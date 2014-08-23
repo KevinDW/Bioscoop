@@ -75,4 +75,31 @@ public class KlantDAO implements DAOInterface<Klant>
 
         return statement.execute();
     }
+
+    public boolean update(Klant klant) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE klant " +
+            "SET naam = ?, email = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setString(1, klant.getNaam());
+        statement.setString(2, klant.getEmail());
+        statement.setInt(3, klant.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Klant klant) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM klant " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, klant.getId());
+
+        return statement.execute();
+    }
 }

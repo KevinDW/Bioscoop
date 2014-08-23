@@ -90,4 +90,36 @@ public class FilmDAO implements DAOInterface<Film>
 
         return statement.execute();
     }
+
+    public boolean update(Film film) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE film " +
+            "SET naam = ?, code = ?, jaar = ?, duur = ?, beoordeling = ?, restrictieId = ?, genreId = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setString(1, film.getNaam());
+        statement.setString(2, film.getCode());
+        statement.setInt(3, film.getJaar());
+        statement.setInt(4, film.getDuur());
+        statement.setDouble(5, film.getBeoordeling());
+        statement.setInt(6, film.getRestrictie().getId());
+        statement.setInt(7, film.getGenre().getId());
+        statement.setInt(8, film.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Film film) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM film " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, film.getId());
+
+        return statement.execute();
+    }
 }

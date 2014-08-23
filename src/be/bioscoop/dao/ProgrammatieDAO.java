@@ -79,16 +79,45 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
         return statement.execute();
     }
 
+    public boolean update(Programmatie programmatie) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE programmatie " +
+            "SET datum = ?, beginUur = ?, zaalId = ?, filmId = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setDate(1, programmatie.getDatum());
+        statement.setTime(2, programmatie.getBeginUur());
+        statement.setInt(3, programmatie.getZaal().getId());
+        statement.setInt(4, programmatie.getFilm().getId());
+        statement.setInt(5, programmatie.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Programmatie programmatie) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM programmatie " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, programmatie.getId());
+
+        return statement.execute();
+    }
+
     public List<Programmatie> whereBioscoopAndDateBetween(String bioscoop, Date beginDatum, Date eindDatum) throws SQLException
     {
         PreparedStatement statement = connection.prepareStatement(
-            "SELECT p.id, p.datum, p.beginUur, p.zaalId, p.filmid" +
-            "FROM programmatie AS p " +
-            "INNER JOIN film AS f ON p.filmId = f.id " +
-            "INNER JOIN zaal AS z ON p.zaalId = z.id " +
-            "INNER JOIN bioscoop AS b ON z.bioscoopId = b.id " +
-            "WHERE b.naam = ? " +
-            "AND p.datum BETWEEN ? AND ?"
+                "SELECT p.id, p.datum, p.beginUur, p.zaalId, p.filmid" +
+                        "FROM programmatie AS p " +
+                        "INNER JOIN film AS f ON p.filmId = f.id " +
+                        "INNER JOIN zaal AS z ON p.zaalId = z.id " +
+                        "INNER JOIN bioscoop AS b ON z.bioscoopId = b.id " +
+                        "WHERE b.naam = ? " +
+                        "AND p.datum BETWEEN ? AND ?"
         );
 
         statement.setString(1, bioscoop);
@@ -101,13 +130,13 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
         while (resultSet.next())
         {
             programmaties.add(
-                new Programmatie(
-                    resultSet.getInt(1),
-                    resultSet.getDate(2),
-                    resultSet.getTime(3),
-                    new ZaalDAO(this.connection).find(resultSet.getInt(4)),
-                    new FilmDAO(this.connection).find(resultSet.getInt(5))
-                )
+                    new Programmatie(
+                            resultSet.getInt(1),
+                            resultSet.getDate(2),
+                            resultSet.getTime(3),
+                            new ZaalDAO(this.connection).find(resultSet.getInt(4)),
+                            new FilmDAO(this.connection).find(resultSet.getInt(5))
+                    )
             );
         }
 

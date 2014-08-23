@@ -81,4 +81,33 @@ public class SocialDAO implements DAOInterface<Social>
 
         return statement.execute();
     }
+
+    public boolean update(Social social) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE social " +
+            "SET datum = ?, type = ?, bericht = ?, filmId = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setDate(1, social.getDatum());
+        statement.setString(2, social.getType());
+        statement.setString(3, social.getBericht());
+        statement.setInt(4, social.getFilm().getId());
+        statement.setInt(5, social.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Social social) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM social " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, social.getId());
+
+        return statement.execute();
+    }
 }
