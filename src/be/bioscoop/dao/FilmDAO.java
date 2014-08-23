@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmDAO
+public class FilmDAO implements DAOInterface<Film>g
 {
     private Connection connection;
 
@@ -21,7 +21,9 @@ public class FilmDAO
     public List<Film> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam, code, jaar, duur, beoordeling, restrictieId, genreId FROM film ORDER BY naam"
+            "SELECT id, naam, code, jaar, duur, beoordeling, restrictieId, genreId " +
+            "FROM film " +
+            "ORDER BY naam"
         );
 
         ResultSet resultSet = statement.executeQuery();
@@ -49,7 +51,9 @@ public class FilmDAO
     public Film get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam, code, jaar, duur, beoordeling, genreId, restrictieId FROM film WHERE id = ?"
+            "SELECT id, naam, code, jaar, duur, beoordeling, genreId, restrictieId " +
+            "FROM film " +
+            "WHERE id = ?"
         );
 
         statement.setInt(1, id);

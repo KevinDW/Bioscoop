@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BarcodeDAO
+public class BarcodeDAO implements DAOInterface<Barcode>
 {
     private Connection connection;
 
@@ -21,7 +21,9 @@ public class BarcodeDAO
     public List<Barcode> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, code, gebruikt FROM barcode ORDER BY code"
+            "SELECT id, code, gebruikt " +
+            "FROM barcode " +
+            "ORDER BY code"
         );
 
         ResultSet resultSet = statement.executeQuery();
@@ -38,7 +40,9 @@ public class BarcodeDAO
     public Barcode get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, code, gebruikt FROM barcode WHERE id = ?"
+            "SELECT id, code, gebruikt " +
+            "FROM barcode " +
+            "WHERE id = ?"
         );
 
         statement.setInt(1, id);
@@ -51,5 +55,18 @@ public class BarcodeDAO
             resultSet.getString(2),
             resultSet.getBoolean(3)
         );
+    }
+
+    public boolean insert(Barcode barcode) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO barcode (code, gebruikt) " +
+            "VALUES (?, ?)"
+        );
+
+        statement.setString(1, barcode.getCode());
+        statement.setBoolean(2, barcode.isGebruikt());
+
+        return statement.execute();
     }
 }

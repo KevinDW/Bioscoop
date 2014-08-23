@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BioscoopDAO
+public class BioscoopDAO implements DAOInterface<Bioscoop>
 {
     private Connection connection;
 
@@ -21,7 +21,9 @@ public class BioscoopDAO
     public List<Bioscoop> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam, straat, postcode, gemeente FROM bioscoop ORDER BY postcode"
+            "SELECT id, naam, straat, postcode, gemeente " +
+            "FROM bioscoop " +
+            "ORDER BY postcode"
         );
 
         ResultSet resultSet = statement.executeQuery();
@@ -46,7 +48,9 @@ public class BioscoopDAO
     public Bioscoop get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam, straat, postcode, gemeente FROM bioscoop WHERE id = ?"
+            "SELECT id, naam, straat, postcode, gemeente " +
+            "FROM bioscoop " +
+            "WHERE id = ?"
         );
 
         statement.setInt(1, id);
@@ -61,5 +65,20 @@ public class BioscoopDAO
             resultSet.getString(4),
             resultSet.getString(5)
         );
+    }
+
+    public boolean insert(Bioscoop bioscoop) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO bioscoop (naam, straat, postcode, gemeente) " +
+            "VALUES (?, ?, ?, ?)"
+        );
+
+        statement.setString(1, bioscoop.getNaam());
+        statement.setString(2, bioscoop.getStraat());
+        statement.setString(3, bioscoop.getPostcode());
+        statement.setString(4, bioscoop.getGemeente());
+
+        return statement.execute();
     }
 }

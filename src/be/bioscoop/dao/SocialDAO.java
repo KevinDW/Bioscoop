@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SocialDAO
+public class SocialDAO implements DAOInterface<Social>
 {
     private Connection connection;
 
@@ -21,7 +21,9 @@ public class SocialDAO
     public List<Social> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, datum, type, bericht, filmId FROM social ORDER BY datum"
+            "SELECT id, datum, type, bericht, filmId " +
+            "FROM social " +
+            "ORDER BY datum"
         );
 
         ResultSet resultSet = statement.executeQuery();
@@ -43,24 +45,12 @@ public class SocialDAO
         return socials;
     }
 
-    public boolean insert(Social social) throws SQLException
-    {
-        PreparedStatement statement = this.connection.prepareStatement(
-            "INSERT INTO social (datum, type, bericht, filmId) VALUES (?, ?, ?, ?)"
-        );
-
-        statement.setDate(1, social.getDatum());
-        statement.setString(2, social.getType());
-        statement.setString(3, social.getBericht());
-        statement.setInt(4, social.getFilm().getId());
-
-        return statement.execute();
-    }
-
     public Social get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, datum, type, bericht, filmId FROM social WHERE id = ?"
+            "SELECT id, datum, type, bericht, filmId " +
+            "FROM social " +
+            "WHERE id = ?"
         );
 
         statement.setInt(1, id);
@@ -75,5 +65,20 @@ public class SocialDAO
             resultSet.getString(4),
             new FilmDAO(this.connection).get(resultSet.getInt(5))
         );
+    }
+
+    public boolean insert(Social social) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO social (datum, type, bericht, filmId) " +
+            "VALUES (?, ?, ?, ?)"
+        );
+
+        statement.setDate(1, social.getDatum());
+        statement.setString(2, social.getType());
+        statement.setString(3, social.getBericht());
+        statement.setInt(4, social.getFilm().getId());
+
+        return statement.execute();
     }
 }

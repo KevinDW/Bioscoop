@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestrictieDAO
+public class RestrictieDAO implements DAOInterface<Restrictie>
 {
     private Connection connection;
 
@@ -21,7 +21,9 @@ public class RestrictieDAO
     public List<Restrictie> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam FROM restrictie ORDER BY naam"
+            "SELECT id, naam " +
+            "FROM restrictie " +
+            "ORDER BY naam"
         );
 
         ResultSet resultSet = statement.executeQuery();
@@ -42,7 +44,9 @@ public class RestrictieDAO
     public Restrictie get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam FROM restrictie WHERE id = ?"
+            "SELECT id, naam " +
+            "FROM restrictie " +
+            "WHERE id = ?"
         );
 
         statement.setInt(1, id);

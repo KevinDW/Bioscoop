@@ -39,7 +39,7 @@ public class Console
             Connection connection = Database.connect();
 
             ProgrammatieDAO programmatieDAO = new ProgrammatieDAO(connection);
-            List<Programmatie> programmaties = programmatieDAO.programmatiesVoorBepaaldeBioscoopTussenTweeDatums(bioscoop, beginDatum, eindDatum);
+            List<Programmatie> programmaties = programmatieDAO.whereBioscoopAndDateBetween(bioscoop, beginDatum, eindDatum);
 
             for (Programmatie programmatie : programmaties)
             {

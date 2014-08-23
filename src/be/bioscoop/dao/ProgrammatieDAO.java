@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProgrammatieDAO
+public class ProgrammatieDAO implements DAOInterface<Programmatie>
 {
     private Connection connection;
 
@@ -18,7 +18,9 @@ public class ProgrammatieDAO
     public List<Programmatie> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, datum, beginUur, zaalId, filmId FROM programmatie ORDER BY datum"
+            "SELECT id, datum, beginUur, zaalId, filmId " +
+            "FROM programmatie " +
+            "ORDER BY datum"
         );
 
         ResultSet resultSet = statement.executeQuery();
@@ -43,7 +45,9 @@ public class ProgrammatieDAO
     public Programmatie get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, datum, beginuur, zaalId, filmId FROM programmatie WHERE id = ?"
+            "SELECT id, datum, beginuur, zaalId, filmId " +
+            "FROM programmatie " +
+            "WHERE id = ?"
         );
 
         statement.setInt(1, id);
@@ -60,15 +64,16 @@ public class ProgrammatieDAO
         );
     }
 
-    public List<Programmatie> programmatiesVoorBepaaldeBioscoopTussenTweeDatums(String bioscoop, Date beginDatum, Date eindDatum) throws SQLException
+    public List<Programmatie> whereBioscoopAndDateBetween(String bioscoop, Date beginDatum, Date eindDatum) throws SQLException
     {
         PreparedStatement statement = connection.prepareStatement(
-            "SELECT programmatie.id, programmatie.datum, programmatie.beginUur, programmatie.zaalId, programmatie.filmid" +
-            "FROM programmatie " +
-            "INNER JOIN film ON programmatie.filmId = film.id " +
-            "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
-            "INNER JOIN bioscoop ON zaal.bioscoopId = bioscoop.id " +
-            "WHERE bioscoop.naam = ? AND programmatie.datum BETWEEN ? AND ?"
+            "SELECT p.id, p.datum, p.beginUur, p.zaalId, p.filmid" +
+            "FROM programmatie AS p " +
+            "INNER JOIN film AS f ON p.filmId = f.id " +
+            "INNER JOIN zaal AS z ON p.zaalId = z.id " +
+            "INNER JOIN bioscoop AS b ON z.bioscoopId = b.id " +
+            "WHERE b.naam = ? " +
+            "AND p.datum BETWEEN ? AND ?"
         );
 
         statement.setString(1, bioscoop);
@@ -89,11 +94,6 @@ public class ProgrammatieDAO
                     new FilmDAO(this.connection).get(resultSet.getInt(5))
                 )
             );
-        }
-
-        for (Programmatie programmatie : programmaties)
-        {
-            System.out.println(programmatie.getDatum());
         }
 
         return programmaties;

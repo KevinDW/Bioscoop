@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ZaalDAO
+public class ZaalDAO implements DAOInterface<Zaal>
 {
     private Connection connection;
 
@@ -21,7 +21,9 @@ public class ZaalDAO
     public List<Zaal> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, zaalNr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId FROM zaal ORDER BY zaalNr"
+            "SELECT id, zaalNr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId " +
+            "FROM zaal " +
+            "ORDER BY zaalNr"
         );
 
         ResultSet resultSet = statement.executeQuery();
@@ -48,7 +50,9 @@ public class ZaalDAO
     public Zaal get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, zaalnr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId FROM zaal WHERE id = ?"
+            "SELECT id, zaalnr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId " +
+            "FROM zaal " +
+            "WHERE id = ?"
         );
 
         statement.setInt(1, id);

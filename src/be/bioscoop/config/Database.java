@@ -12,6 +12,11 @@ public final class Database
 
     public static Connection connect() throws SQLException
     {
+        if (connection != null)
+        {
+            return connection;
+        }
+
         return DriverManager.getConnection(database, username, password);
     }
 

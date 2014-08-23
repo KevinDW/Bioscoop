@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BestellingDAO
+public class BestellingDAO implements DAOInterface<Bestelling>
 {
     private Connection connection;
 
@@ -21,7 +21,9 @@ public class BestellingDAO
     public List<Bestelling> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, klantId, ticketId FROM bestelling ORDER BY id"
+            "SELECT id, klantId, ticketId " +
+            "FROM bestelling " +
+            "ORDER BY id"
         );
 
         ResultSet resultSet = statement.executeQuery();
@@ -44,7 +46,9 @@ public class BestellingDAO
     public Bestelling get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, klantId, ticketId FROM bestelling WHERE id = ?"
+            "SELECT id, klantId, ticketId " +
+            "FROM bestelling " +
+            "WHERE id = ?"
         );
 
         statement.setInt(1, id);
@@ -57,5 +61,18 @@ public class BestellingDAO
             new KlantDAO(this.connection).get(resultSet.getInt(2)),
             new TicketDAO(this.connection).get(resultSet.getInt(3))
         );
+    }
+
+    public boolean insert(Bestelling bestelling) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO bestelling (klantId, ticketId) " +
+            "VALUES (?, ?)"
+        );
+
+        statement.setInt(1, bestelling.getKlant().getId());
+        statement.setInt(2, bestelling.getTicket().getId());
+
+        return statement.execute();
     }
 }

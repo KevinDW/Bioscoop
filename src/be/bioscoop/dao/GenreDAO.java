@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenreDAO
+public class GenreDAO implements DAOInterface<Genre>
 {
     private Connection connection;
 
@@ -21,7 +21,9 @@ public class GenreDAO
     public List<Genre> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam FROM restrictie ORDER BY naam"
+            "SELECT id, naam " +
+            "FROM restrictie " +
+            "ORDER BY naam"
         );
 
         ResultSet resultSet = statement.executeQuery();
@@ -43,7 +45,9 @@ public class GenreDAO
     public Genre get(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam FROM restrictie WHERE id = ?"
+            "SELECT id, naam " +
+            "FROM restrictie " +
+            "WHERE id = ?"
         );
 
         statement.setInt(1, id);
