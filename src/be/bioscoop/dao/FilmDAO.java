@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmDAO implements DAOInterface<Film>g
+public class FilmDAO implements DAOInterface<Film>
 {
     private Connection connection;
 
@@ -71,5 +71,23 @@ public class FilmDAO implements DAOInterface<Film>g
             new RestrictieDAO(this.connection).get(resultSet.getInt(7)),
             new GenreDAO(this.connection).get(resultSet.getInt(8))
         );
+    }
+
+    public boolean insert(Film film) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO film (naam, code, jaar, duur, beoordeling, restrictieId, genreId) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?)"
+        );
+
+        statement.setString(1, film.getNaam());
+        statement.setString(2, film.getCode());
+        statement.setInt(3, film.getJaar());
+        statement.setInt(4, film.getDuur());
+        statement.setDouble(5, film.getBeoordeling());
+        statement.setInt(6, film.getRestrictie().getId());
+        statement.setInt(7, film.getGenre().getId());
+
+        return statement.execute();
     }
 }

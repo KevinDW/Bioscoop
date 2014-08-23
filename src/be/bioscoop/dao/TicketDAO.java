@@ -64,4 +64,18 @@ public class TicketDAO implements DAOInterface<Ticket>
             new BarcodeDAO(this.connection).get(resultSet.getInt(4))
         );
     }
+
+    public boolean insert(Ticket ticket) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO ticket (prijs, programmatieId, barcodeId) " +
+            "VALUES (?, ?, ?)"
+        );
+
+        statement.setDouble(1, ticket.getPrijs());
+        statement.setInt(2, ticket.getProgrammatie().getId());
+        statement.setInt(3, ticket.getBarcode().getId());
+
+        return statement.execute();
+    }
 }

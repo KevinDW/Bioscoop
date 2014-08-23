@@ -59,4 +59,16 @@ public class RestrictieDAO implements DAOInterface<Restrictie>
             resultSet.getString(2)
         );
     }
+
+    public boolean insert(Restrictie restrictie) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO restrictie (naam) " +
+            "VALUES (?)"
+        );
+
+        statement.setString(1, restrictie.getNaam());
+
+        return statement.execute();
+    }
 }

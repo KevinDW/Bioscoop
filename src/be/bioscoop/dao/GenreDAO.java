@@ -60,4 +60,16 @@ public class GenreDAO implements DAOInterface<Genre>
             resultSet.getString(2)
         );
     }
+
+    public boolean insert(Genre genre) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO genre (naam) " +
+            "VALUES (?)"
+        );
+
+        statement.setString(1, genre.getNaam());
+
+        return statement.execute();
+    }
 }

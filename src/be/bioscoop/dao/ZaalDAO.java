@@ -70,4 +70,21 @@ public class ZaalDAO implements DAOInterface<Zaal>
             new BioscoopDAO(this.connection).get(resultSet.getInt(2))
         );
     }
+
+    public boolean insert(Zaal zaal) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO zaal (zaalNr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId) " +
+            "VALUES (?, ?, ?, ?, ?, ?)"
+        );
+
+        statement.setInt(1, zaal.getZaalNr());
+        statement.setInt(2, zaal.getCapaciteit());
+        statement.setInt(3, zaal.getMaxRij());
+        statement.setInt(4, zaal.getMaxKolom());
+        statement.setInt(5, zaal.getVerdieping());
+        statement.setInt(6, zaal.getBioscoop().getId());
+
+        return statement.execute();
+    }
 }

@@ -62,4 +62,17 @@ public class KlantDAO implements DAOInterface<Klant>
             resultSet.getString(3)
         );
     }
+
+    public boolean insert(Klant klant) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO klant (naam, email) " +
+            "VALUES (?, ?)"
+        );
+
+        statement.setString(1, klant.getNaam());
+        statement.setString(2, klant.getEmail());
+
+        return statement.execute();
+    }
 }

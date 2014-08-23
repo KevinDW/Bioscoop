@@ -64,6 +64,21 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
         );
     }
 
+    public boolean insert(Programmatie programmatie) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO programmatie (datum, beginUur, zaalId, filmId) " +
+            "VALUES (?, ?, ?, ?)"
+        );
+
+        statement.setDate(1, programmatie.getDatum());
+        statement.setTime(2, programmatie.getBeginUur());
+        statement.setInt(3, programmatie.getZaal().getId());
+        statement.setInt(4, programmatie.getFilm().getId());
+
+        return statement.execute();
+    }
+
     public List<Programmatie> whereBioscoopAndDateBetween(String bioscoop, Date beginDatum, Date eindDatum) throws SQLException
     {
         PreparedStatement statement = connection.prepareStatement(
