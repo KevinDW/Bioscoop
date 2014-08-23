@@ -43,7 +43,10 @@ public class Console
 
             for (Programmatie programmatie : programmaties)
             {
-                System.out.println(programmatie);
+                System.out.printf("%s | ", programmatie.getDatum());
+                System.out.printf("%s | ", programmatie.getBeginUur());
+                System.out.printf("%d | ", programmatie.getZaal().getZaalNr());
+                System.out.printf("%s \n", programmatie.getFilm().getNaam());
             }
 
             Database.close();

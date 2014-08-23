@@ -111,7 +111,7 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
     public List<Programmatie> whereBioscoopAndDateBetween(String bioscoop, Date beginDatum, Date eindDatum) throws SQLException
     {
         PreparedStatement statement = connection.prepareStatement(
-            "SELECT p.id, p.datum, p.beginUur, p.zaalId, p.filmid" +
+            "SELECT p.id, p.datum, p.beginUur, p.zaalId, p.filmid " +
             "FROM programmatie AS p " +
             "INNER JOIN film AS f ON p.filmId = f.id " +
             "INNER JOIN zaal AS z ON p.zaalId = z.id " +
