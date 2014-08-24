@@ -18,6 +18,7 @@ public class Console
     public static void main(String[] args)
     {
         programmatiesVoorBepaaldeBioscoopTussenTweeDatums();
+        socialeBerichtenViaDAO();
         socialeBerichtenOpQueue();
     }
 
@@ -48,6 +49,41 @@ public class Console
                 System.out.printf("%d | ", programmatie.getZaal().getZaalNr());
                 System.out.printf("%s \n", programmatie.getFilm().getNaam());
             }
+
+            Database.close();
+        }
+        catch (SQLException exception)
+        {
+            exception.getMessage();
+        }
+    }
+
+    private static void socialeBerichtenViaDAO()
+    {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Datum: ");
+        Date datum = Date.valueOf(scanner.nextLine());
+
+        System.out.print("Sociaal netwerk: ");
+        String netwerk = scanner.nextLine();
+
+        System.out.print("Film: ");
+        int film = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Bericht: ");
+        String bericht = scanner.nextLine();
+
+        try
+        {
+            Connection connection = Database.connect();
+
+            FilmDAO filmDAO = new FilmDAO(connection);
+            SocialDAO socialDAO = new SocialDAO(connection);
+
+            socialDAO.insert(
+                new Social(datum, netwerk, bericht, filmDAO.find(film))
+            );
 
             Database.close();
         }
