@@ -23,7 +23,7 @@ public class Console
         Console console = new Console();
 
         // console.programmatiesVoorBepaaldeBioscoopTussenTweeDatums();
-        console.socialeBerichtenViaDAO();
+        // console.socialeBerichtenViaDAO();
         // console.socialeBerichtenOpQueue();
     }
 

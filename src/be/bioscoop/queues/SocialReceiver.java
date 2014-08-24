@@ -35,7 +35,7 @@ public class SocialReceiver
         Session session = amqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
         // Maak een nieuwe queue aan (of krijg de reeds aangemaakte terug)
-        Destination destination = session.createQueue("TEST.SENDRECEIVE");
+        Destination destination = session.createQueue("SOCIAL.MESSAGES");
 
         // Maak een consumer aan die berichten van de queue ontvangt
         MessageConsumer consumer = session.createConsumer(destination);

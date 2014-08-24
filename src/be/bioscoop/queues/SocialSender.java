@@ -20,7 +20,7 @@ public class SocialSender
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
         // Maak een nieuwe queue aan (of krijg de reeds aangemaakte terug)
-        Destination destination = session.createQueue("TEST.SENDRECEIVE");
+        Destination destination = session.createQueue("SOCIAL.MESSAGES");
 
         // Maak een producer aan die berichten naar de queue verzendt
         MessageProducer producer = session.createProducer(destination);

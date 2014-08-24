@@ -17,7 +17,10 @@ public final class Database
             return connection;
         }
 
-        return DriverManager.getConnection(database, username, password);
+        connection = DriverManager.getConnection(database, username, password);
+        connection.setAutoCommit(true);
+
+        return connection;
     }
 
     public static void close(Statement statement, ResultSet resultSet) throws SQLException
