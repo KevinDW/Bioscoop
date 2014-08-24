@@ -1,13 +1,19 @@
-package be.bioscoop.models;
+package be.bioscoop.entities;
 
-public class Genre
+public class Restrictie
 {
     private int id;
     private String naam;
 
-    public Genre(int id)
+    public Restrictie(int id, String naam)
     {
         this.id = id;
+        this.naam = naam;
+    }
+
+    public Restrictie(String naam)
+    {
+        this.naam = naam;
     }
 
     public int getId()

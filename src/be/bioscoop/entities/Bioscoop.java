@@ -1,4 +1,4 @@
-package be.bioscoop.models;
+package be.bioscoop.entities;
 
 public class Bioscoop
 {
@@ -8,9 +8,21 @@ public class Bioscoop
     private String postcode;
     private String gemeente;
 
-    public Bioscoop(int id)
+    public Bioscoop(int id, String naam, String straat, String postcode, String gemeente)
     {
         this.id = id;
+        this.naam = naam;
+        this.straat = straat;
+        this.postcode = postcode;
+        this.gemeente = gemeente;
+    }
+
+    public Bioscoop(String naam, String straat, String postcode, String gemeente)
+    {
+        this.naam = naam;
+        this.straat = straat;
+        this.postcode = postcode;
+        this.gemeente = gemeente;
     }
 
     public int getId()

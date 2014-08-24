@@ -1,4 +1,4 @@
-package be.bioscoop.models;
+package be.bioscoop.entities;
 
 public class Barcode
 {
@@ -6,9 +6,17 @@ public class Barcode
     private String code;
     private boolean gebruikt;
 
-    public Barcode(int id)
+    public Barcode(int id, String code, boolean gebruikt)
     {
         this.id = id;
+        this.code = code;
+        this.gebruikt = gebruikt;
+    }
+
+    public Barcode(String code, boolean gebruikt)
+    {
+        this.code = code;
+        this.gebruikt = gebruikt;
     }
 
     public int getId()

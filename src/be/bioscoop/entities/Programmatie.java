@@ -1,7 +1,7 @@
-package be.bioscoop.models;
+package be.bioscoop.entities;
 
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
 
 public class Programmatie
 {
@@ -11,9 +11,21 @@ public class Programmatie
     private Zaal zaal;
     private Film film;
 
-    public Programmatie(int id)
+    public Programmatie(int id, Date datum, Time beginUur, Zaal zaal, Film film)
     {
         this.id = id;
+        this.datum = datum;
+        this.beginUur = beginUur;
+        this.zaal = zaal;
+        this.film = film;
+    }
+
+    public Programmatie(Date datum, Time beginUur, Zaal zaal, Film film)
+    {
+        this.datum = datum;
+        this.beginUur = beginUur;
+        this.zaal = zaal;
+        this.film = film;
     }
 
     public int getId()

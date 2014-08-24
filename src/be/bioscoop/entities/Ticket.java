@@ -1,4 +1,4 @@
-package be.bioscoop.models;
+package be.bioscoop.entities;
 
 public class Ticket
 {
@@ -7,10 +7,21 @@ public class Ticket
     private Programmatie programmatie;
     private Barcode barcode;
 
-    public Ticket(int id)
+    public Ticket(int id, double prijs, Programmatie programmatie, Barcode barcode)
     {
         this.id = id;
+        this.prijs = prijs;
+        this.programmatie = programmatie;
+        this.barcode = barcode;
     }
+
+    public Ticket(double prijs, Programmatie programmatie, Barcode barcode)
+    {
+        this.prijs = prijs;
+        this.programmatie = programmatie;
+        this.barcode = barcode;
+    }
+
 
     public int getId()
     {

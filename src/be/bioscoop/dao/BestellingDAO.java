@@ -1,8 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Bestelling;
-import be.bioscoop.models.Klant;
-import be.bioscoop.models.Ticket;
+import be.bioscoop.entities.Bestelling;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BestellingDAO
+public class BestellingDAO implements DAOInterface<Bestelling>
 {
     private Connection connection;
 
@@ -22,20 +20,86 @@ public class BestellingDAO
 
     public List<Bestelling> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM bestelling ORDER BY id");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, klantId, ticketId " +
+            "FROM bestelling " +
+            "ORDER BY id"
+        );
+
         ResultSet resultSet = statement.executeQuery();
         List<Bestelling> bestellingen = new ArrayList<Bestelling>();
 
         while (resultSet.next())
         {
-            Bestelling bestelling = new Bestelling(resultSet.getInt(1));
-
-            bestelling.setKlant(new Klant(resultSet.getInt(2)));
-            bestelling.setTicket(new Ticket(resultSet.getInt(3)));
-
-            bestellingen.add(bestelling);
+            bestellingen.add(
+                new Bestelling(
+                    resultSet.getInt(1),
+                    new KlantDAO(this.connection).find(resultSet.getInt(2)),
+                    new TicketDAO(this.connection).find(resultSet.getInt(3))
+                )
+            );
         }
 
         return bestellingen;
+    }
+
+    public Bestelling find(int id) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, klantId, ticketId " +
+            "FROM bestelling " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, id);
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Bestelling(
+            resultSet.getInt(1),
+            new KlantDAO(this.connection).find(resultSet.getInt(2)),
+            new TicketDAO(this.connection).find(resultSet.getInt(3))
+        );
+    }
+
+    public boolean insert(Bestelling bestelling) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO bestelling (klantId, ticketId) " +
+            "VALUES (?, ?)"
+        );
+
+        statement.setInt(1, bestelling.getKlant().getId());
+        statement.setInt(2, bestelling.getTicket().getId());
+
+        return statement.execute();
+    }
+
+    public boolean update(Bestelling bestelling) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE bestelling " +
+            "SET klantId = ?, ticketId = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, bestelling.getKlant().getId());
+        statement.setInt(2, bestelling.getTicket().getId());
+        statement.setInt(3, bestelling.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Bestelling bestelling) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM bestelling " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, bestelling.getId());
+
+        return statement.execute();
     }
 }

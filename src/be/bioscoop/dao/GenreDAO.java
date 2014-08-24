@@ -1,6 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.entities.Restrictie;
+import be.bioscoop.entities.Genre;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,16 +9,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestrictieDAO implements DAOInterface<Restrictie>
+public class GenreDAO implements DAOInterface<Genre>
 {
     private Connection connection;
 
-    public RestrictieDAO(Connection connection)
+    public GenreDAO(Connection connection)
     {
         this.connection = connection;
     }
 
-    public List<Restrictie> all() throws SQLException
+    public List<Genre> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, naam " +
@@ -27,13 +27,14 @@ public class RestrictieDAO implements DAOInterface<Restrictie>
         );
 
         ResultSet resultSet = statement.executeQuery();
-        List<Restrictie> restricties = new ArrayList<Restrictie>();
+        List<Genre> restricties = new ArrayList<Genre>();
 
         while (resultSet.next())
         {
             restricties.add(
-                new Restrictie(
-                    resultSet.getInt(1), resultSet.getString(2)
+                new Genre(
+                    resultSet.getInt(1),
+                    resultSet.getString(2)
                 )
             );
         }
@@ -41,7 +42,7 @@ public class RestrictieDAO implements DAOInterface<Restrictie>
         return restricties;
     }
 
-    public Restrictie find(int id) throws SQLException
+    public Genre find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, naam " +
@@ -54,46 +55,46 @@ public class RestrictieDAO implements DAOInterface<Restrictie>
         ResultSet resultSet = statement.executeQuery();
         resultSet.first();
 
-        return new Restrictie(
+        return new Genre(
             resultSet.getInt(1),
             resultSet.getString(2)
         );
     }
 
-    public boolean insert(Restrictie restrictie) throws SQLException
+    public boolean insert(Genre genre) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "INSERT INTO restrictie (naam) " +
+            "INSERT INTO genre (naam) " +
             "VALUES (?)"
         );
 
-        statement.setString(1, restrictie.getNaam());
+        statement.setString(1, genre.getNaam());
 
         return statement.execute();
     }
 
-    public boolean update(Restrictie restrictie) throws SQLException
+    public boolean update(Genre genre) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "UPDATE restrictie " +
+            "UPDATE genre " +
             "SET naam = ? " +
             "WHERE id = ?"
         );
 
-        statement.setString(1, restrictie.getNaam());
-        statement.setInt(2, restrictie.getId());
+        statement.setString(1, genre.getNaam());
+        statement.setInt(2, genre.getId());
 
         return statement.execute();
     }
 
-    public boolean delete(Restrictie restrictie) throws SQLException
+    public boolean delete(Genre genre) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "DELETE FROM restrictie " +
+            "DELETE FROM genre " +
             "WHERE id = ?"
         );
 
-        statement.setInt(1, restrictie.getId());
+        statement.setInt(1, genre.getId());
 
         return statement.execute();
     }

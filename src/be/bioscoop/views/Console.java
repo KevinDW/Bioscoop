@@ -1,70 +1,63 @@
 package be.bioscoop.views;
 
 import be.bioscoop.config.Database;
+import be.bioscoop.dao.*;
+import be.bioscoop.entities.*;
 import be.bioscoop.queues.SocialReceiver;
 import be.bioscoop.queues.SocialSender;
+import org.jdom.JDOMException;
 
+import javax.jms.JMSException;
+import java.io.IOException;
 import java.sql.*;
+import java.util.List;
 import java.util.Scanner;
 
 public class Console
 {
     public static void main(String[] args)
     {
-        //fetchResources();
-        fetchQueue();
+        programmatiesVoorBepaaldeBioscoopTussenTweeDatums();
+        socialeBerichtenOpQueue();
     }
 
-    private static void fetchResources()
+    private static void programmatiesVoorBepaaldeBioscoopTussenTweeDatums()
     {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Bioscoop: ");
+        String bioscoop = scanner.nextLine();
+
+        System.out.print("Begindatum (yyyy-mm-dd): ");
+        Date beginDatum = Date.valueOf(scanner.nextLine());
+
+        System.out.print("Einddatum (yyyy-mm-dd): ");
+        Date eindDatum = Date.valueOf(scanner.nextLine());
+
         try
         {
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.print("Bioscoop: ");
-            String bioscoop = scanner.nextLine();
-
-            System.out.print("Begindatum (yyyy-mm-dd): ");
-            Date beginDatum = Date.valueOf(scanner.nextLine());
-
-            System.out.print("Einddatum (yyyy-mm-dd): ");
-            Date eindDatum = Date.valueOf(scanner.nextLine());
-
             Connection connection = Database.connect();
 
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT zaal.zaalNr, film.naam " +
-                            "FROM programmatie " +
-                            "INNER JOIN film ON programmatie.filmId = film.id " +
-                            "INNER JOIN zaal ON programmatie.zaalId = zaal.id " +
-                            "INNER JOIN bioscoop ON zaal.bioscoopId = bioscoop.id " +
-                            "WHERE bioscoop.naam = ? AND programmatie.datum BETWEEN ? AND ?"
-            );
+            ProgrammatieDAO programmatieDAO = new ProgrammatieDAO(connection);
+            List<Programmatie> programmaties = programmatieDAO.whereBioscoopAndDateBetween(bioscoop, beginDatum, eindDatum);
 
-            statement.setString(1, bioscoop);
-            statement.setDate(2, beginDatum);
-            statement.setDate(3, eindDatum);
-
-            ResultSet resultSet = statement.executeQuery();
-
-            System.out.printf("Bioscoop: %s\n\n", bioscoop);
-
-            while (resultSet.next())
+            for (Programmatie programmatie : programmaties)
             {
-                System.out.printf("%d | ", resultSet.getInt("zaal.zaalNr"));
-                System.out.printf("%s", resultSet.getString("film.naam"));
-                System.out.println();
+                System.out.printf("%s | ", programmatie.getDatum());
+                System.out.printf("%s | ", programmatie.getBeginUur());
+                System.out.printf("%d | ", programmatie.getZaal().getZaalNr());
+                System.out.printf("%s \n", programmatie.getFilm().getNaam());
             }
 
-            Database.close(statement, resultSet);
+            Database.close();
         }
         catch (SQLException exception)
         {
-            exception.printStackTrace();
+            exception.getMessage();
         }
     }
 
-    private static void fetchQueue()
+    private static void socialeBerichtenOpQueue()
     {
         try
         {
@@ -74,9 +67,21 @@ public class Console
             SocialReceiver socialReceiver = new SocialReceiver();
             socialReceiver.receiveMessage();
         }
-        catch (Exception e)
+        catch (JDOMException exception)
         {
-            e.printStackTrace();
+            exception.getMessage();
+        }
+        catch (JMSException exception)
+        {
+            exception.getMessage();
+        }
+        catch (IOException exception)
+        {
+            exception.getMessage();
+        }
+        catch (SQLException exception)
+        {
+            exception.getMessage();
         }
     }
 }

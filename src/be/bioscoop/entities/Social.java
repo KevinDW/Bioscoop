@@ -1,4 +1,4 @@
-package be.bioscoop.models;
+package be.bioscoop.entities;
 
 import java.sql.Date;
 
@@ -9,6 +9,23 @@ public class Social
     private String type;
     private String bericht;
     private Film film;
+
+    public Social(int id, Date datum, String type, String bericht, Film film)
+    {
+        this.id = id;
+        this.datum = datum;
+        this.type = type;
+        this.bericht = bericht;
+        this.film = film;
+    }
+
+    public Social(Date datum, String type, String bericht, Film film)
+    {
+        this.datum = datum;
+        this.type = type;
+        this.bericht = bericht;
+        this.film = film;
+    }
 
     public int getId()
     {

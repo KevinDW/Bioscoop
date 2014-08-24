@@ -1,8 +1,6 @@
 package be.bioscoop.dao;
 
-import be.bioscoop.models.Film;
-import be.bioscoop.models.Genre;
-import be.bioscoop.models.Restrictie;
+import be.bioscoop.entities.Film;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilmDAO
+public class FilmDAO implements DAOInterface<Film>
 {
     private Connection connection;
 
@@ -22,32 +20,40 @@ public class FilmDAO
 
     public List<Film> all() throws SQLException
     {
-        PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM film ORDER BY naam");
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam, code, jaar, duur, beoordeling, restrictieId, genreId " +
+            "FROM film " +
+            "ORDER BY naam"
+        );
+
         ResultSet resultSet = statement.executeQuery();
         List<Film> films = new ArrayList<Film>();
 
         while (resultSet.next())
         {
-            Film film = new Film(resultSet.getInt(1));
-
-            film.setNaam(resultSet.getString(2));
-            film.setCode(resultSet.getString(3));
-            film.setDuur(resultSet.getInt(4));
-            film.setGenre(new Genre(resultSet.getInt(5)));
-            film.setBeoordeling(resultSet.getDouble(6));
-            film.setDatum(resultSet.getDate(7));
-            film.setRestrictie(new Restrictie(resultSet.getInt(8)));
-
-            films.add(film);
+            films.add(
+                new Film(
+                    resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getInt(4),
+                    resultSet.getInt(5),
+                    resultSet.getDouble(6),
+                    new RestrictieDAO(this.connection).find(resultSet.getInt(7)),
+                    new GenreDAO(this.connection).find(resultSet.getInt(8))
+                )
+            );
         }
 
         return films;
     }
 
-    public Film get(int id) throws SQLException
+    public Film find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, naam, code, datum, duur, beoordeling, genreId, restrictieId FROM film WHERE id = ?"
+            "SELECT id, naam, code, jaar, duur, beoordeling, genreId, restrictieId " +
+            "FROM film " +
+            "WHERE id = ?"
         );
 
         statement.setInt(1, id);
@@ -55,16 +61,65 @@ public class FilmDAO
         ResultSet resultSet = statement.executeQuery();
         resultSet.first();
 
-        Film film = new Film(resultSet.getInt(1));
+        return new Film(
+            resultSet.getInt(1),
+            resultSet.getString(2),
+            resultSet.getString(3),
+            resultSet.getInt(4),
+            resultSet.getInt(5),
+            resultSet.getDouble(6),
+            new RestrictieDAO(this.connection).find(resultSet.getInt(7)),
+            new GenreDAO(this.connection).find(resultSet.getInt(8))
+        );
+    }
 
-        film.setNaam(resultSet.getString(2));
-        film.setCode(resultSet.getString(3));
-        film.setDatum(resultSet.getDate(4));
-        film.setDuur(resultSet.getInt(5));
-        film.setBeoordeling(resultSet.getDouble(6));
-        film.setGenre(new Genre(resultSet.getInt(7)));
-        film.setRestrictie(new Restrictie(resultSet.getInt(8)));
+    public boolean insert(Film film) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "INSERT INTO film (naam, code, jaar, duur, beoordeling, restrictieId, genreId) " +
+            "VALUES (?, ?, ?, ?, ?, ?, ?)"
+        );
 
-        return film;
+        statement.setString(1, film.getNaam());
+        statement.setString(2, film.getCode());
+        statement.setInt(3, film.getJaar());
+        statement.setInt(4, film.getDuur());
+        statement.setDouble(5, film.getBeoordeling());
+        statement.setInt(6, film.getRestrictie().getId());
+        statement.setInt(7, film.getGenre().getId());
+
+        return statement.execute();
+    }
+
+    public boolean update(Film film) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "UPDATE film " +
+            "SET naam = ?, code = ?, jaar = ?, duur = ?, beoordeling = ?, restrictieId = ?, genreId = ? " +
+            "WHERE id = ?"
+        );
+
+        statement.setString(1, film.getNaam());
+        statement.setString(2, film.getCode());
+        statement.setInt(3, film.getJaar());
+        statement.setInt(4, film.getDuur());
+        statement.setDouble(5, film.getBeoordeling());
+        statement.setInt(6, film.getRestrictie().getId());
+        statement.setInt(7, film.getGenre().getId());
+        statement.setInt(8, film.getId());
+
+        return statement.execute();
+    }
+
+    public boolean delete(Film film) throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "DELETE FROM film " +
+            "WHERE id = ?"
+        );
+
+        statement.setInt(1, film.getId());
+
+        return statement.execute();
     }
 }

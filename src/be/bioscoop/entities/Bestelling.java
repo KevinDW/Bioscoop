@@ -1,4 +1,4 @@
-package be.bioscoop.models;
+package be.bioscoop.entities;
 
 public class Bestelling
 {
@@ -6,9 +6,17 @@ public class Bestelling
     private Klant klant;
     private Ticket ticket;
 
-    public Bestelling(int id)
+    public Bestelling(int id, Klant klant, Ticket ticket)
     {
         this.id = id;
+        this.klant = klant;
+        this.ticket = ticket;
+    }
+
+    public Bestelling(Klant klant, Ticket ticket)
+    {
+        this.klant = klant;
+        this.ticket = ticket;
     }
 
     public int getId()
