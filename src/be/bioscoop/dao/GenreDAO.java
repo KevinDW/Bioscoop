@@ -22,16 +22,16 @@ public class GenreDAO implements DAOInterface<Genre>
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, naam " +
-            "FROM restrictie " +
+            "FROM genre " +
             "ORDER BY naam"
         );
 
         ResultSet resultSet = statement.executeQuery();
-        List<Genre> restricties = new ArrayList<Genre>();
+        List<Genre> genres = new ArrayList<Genre>();
 
         while (resultSet.next())
         {
-            restricties.add(
+            genres.add(
                 new Genre(
                     resultSet.getInt(1),
                     resultSet.getString(2)
@@ -39,14 +39,14 @@ public class GenreDAO implements DAOInterface<Genre>
             );
         }
 
-        return restricties;
+        return genres;
     }
 
     public Genre find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, naam " +
-            "FROM restrictie " +
+            "FROM genre " +
             "WHERE id = ?"
         );
 

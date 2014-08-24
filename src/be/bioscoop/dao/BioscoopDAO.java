@@ -23,7 +23,7 @@ public class BioscoopDAO implements DAOInterface<Bioscoop>
         PreparedStatement statement = this.connection.prepareStatement(
             "SELECT id, naam, straat, postcode, gemeente " +
             "FROM bioscoop " +
-            "ORDER BY postcode"
+            "ORDER BY naam"
         );
 
         ResultSet resultSet = statement.executeQuery();

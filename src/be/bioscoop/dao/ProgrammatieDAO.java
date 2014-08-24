@@ -108,7 +108,7 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
         return statement.execute();
     }
 
-    public List<Programmatie> whereBioscoopAndDateBetween(String bioscoop, Date beginDatum, Date eindDatum) throws SQLException
+    public List<Programmatie> whereBioscoopAndDateBetween(int bioscoop, Date beginDatum, Date eindDatum) throws SQLException
     {
         PreparedStatement statement = connection.prepareStatement(
             "SELECT p.id, p.datum, p.beginUur, p.zaalId, p.filmid " +
@@ -116,11 +116,11 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
             "INNER JOIN film AS f ON p.filmId = f.id " +
             "INNER JOIN zaal AS z ON p.zaalId = z.id " +
             "INNER JOIN bioscoop AS b ON z.bioscoopId = b.id " +
-            "WHERE b.naam = ? " +
+            "WHERE b.id = ? " +
             "AND p.datum BETWEEN ? AND ?"
         );
 
-        statement.setString(1, bioscoop);
+        statement.setInt(1, bioscoop);
         statement.setDate(2, beginDatum);
         statement.setDate(3, eindDatum);
 

@@ -1,13 +1,12 @@
 package be.bioscoop.queues;
 
-import be.bioscoop.generators.SocialGenerator;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
 public class SocialSender
 {
-    public void sendMessage() throws JMSException
+    public void sendMessage(String message) throws JMSException
     {
         // Connecteren naar ActiveMQ
         Connection connection = new ActiveMQConnectionFactory("tcp://192.168.20.200:61616").createConnection();
@@ -30,7 +29,7 @@ public class SocialSender
         producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
         // Maak een textmessage aan met als inhoud de gegenereerde XML
-        TextMessage textMessage = session.createTextMessage(new SocialGenerator().createXml());
+        TextMessage textMessage = session.createTextMessage(message);
 
         // Bericht verzenden naar de queue
         producer.send(textMessage);
