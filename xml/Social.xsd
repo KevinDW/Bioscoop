@@ -9,7 +9,7 @@
                     <xsd:complexType>
                         <xsd:sequence>
                             <xsd:element name="Datum" type="xsd:date"/>
-                            <xsd:element name="Type" type="socialType"/>
+                            <xsd:element name="Type" type="T_Social"/>
                             <xsd:element name="Bericht" type="xsd:string"/>
                             <xsd:element name="Film" type="xsd:integer"/>
                         </xsd:sequence>
@@ -19,7 +19,7 @@
         </xsd:complexType>
     </xsd:element>
 
-    <xsd:simpleType name="socialType">
+    <xsd:simpleType name="T_Social">
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="Twitter"/>
             <xsd:enumeration value="Facebook"/>
