@@ -35,6 +35,8 @@ public class SocialSender
         producer.send(textMessage);
 
         // Sluit MessageProducer, Session en Connection
-        be.bioscoop.config.Queue.close(session, producer);
+        producer.close();
+        session.close();
+        connection.close();
     }
 }

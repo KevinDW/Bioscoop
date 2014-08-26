@@ -21,15 +21,15 @@ public class SocialReceiver
     public void receiveMessage() throws JMSException, JDOMException, IOException, SQLException
     {
         // Connecteren naar ActiveMQ
-        javax.jms.Connection amqConnection = Queue.connect();
+        Connection connection = Queue.connect();
 
         // Connectie starten
-        amqConnection.start();
+        connection.start();
 
         // Start een sessie om met ActiveMQ te werken
         // -> false = geen transacties
         // -> true = transacties
-        Session session = amqConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
         // Maak een nieuwe queue aan (of krijg de reeds aangemaakte terug)
         Destination destination = session.createQueue("SOCIAL.MESSAGES");
@@ -44,15 +44,17 @@ public class SocialReceiver
         addMessageToDatabase((TextMessage) message);
 
         // Sluit MessageConsumer, Session en Connection
-        Queue.close(session, consumer);
+        consumer.close();
+        session.close();
+        connection.close();
     }
 
     private void addMessageToDatabase(TextMessage textMessage) throws SQLException, JDOMException, IOException, JMSException
     {
-        java.sql.Connection dbConnection = Database.connect();
+        java.sql.Connection connection = Database.connect();
 
-        FilmDAO filmDAO = new FilmDAO(dbConnection);
-        SocialDAO socialDAO = new SocialDAO(dbConnection);
+        FilmDAO filmDAO = new FilmDAO(connection);
+        SocialDAO socialDAO = new SocialDAO(connection);
 
         String text = textMessage.getText();
         StringReader xml = new StringReader(text);

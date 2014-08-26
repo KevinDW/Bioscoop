@@ -31,7 +31,13 @@ public class BarcodeDAO implements DAOInterface<Barcode>
 
         while (resultSet.next())
         {
-            barcodes.add(new Barcode(resultSet.getInt(1), resultSet.getString(2), resultSet.getBoolean(3)));
+            barcodes.add(
+                new Barcode(
+                    resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getBoolean(3)
+                )
+            );
         }
 
         return barcodes;
