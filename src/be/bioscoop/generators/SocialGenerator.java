@@ -2,6 +2,7 @@ package be.bioscoop.generators;
 
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.Namespace;
 import org.jdom.output.XMLOutputter;
 
 import java.util.Random;
@@ -14,6 +15,10 @@ public class SocialGenerator
 
         Document document = new Document();
         Element social = new Element("Social");
+        Namespace xsi = Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+
+        social.addNamespaceDeclaration(xsi);
+        social.setAttribute("noNamespaceSchemaLocation", "xml/Social.xsd", xsi);
 
         String[] types = {"Twitter", "Facebook", "Google+"};
         String[] berichten = {"Mooie film", "Spannend!", "Angstaanjagend!", "Saai..", "Slechtste film ooit!"};

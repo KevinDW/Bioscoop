@@ -67,7 +67,7 @@ public class ZaalDAO implements DAOInterface<Zaal>
             resultSet.getInt(4),
             resultSet.getInt(5),
             resultSet.getInt(6),
-            new BioscoopDAO(this.connection).find(resultSet.getInt(2))
+            new BioscoopDAO(this.connection).find(resultSet.getInt(7))
         );
     }
 

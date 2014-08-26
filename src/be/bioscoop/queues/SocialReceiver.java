@@ -1,19 +1,16 @@
 package be.bioscoop.queues;
 
 import be.bioscoop.config.Database;
+import be.bioscoop.config.Queue;
 import be.bioscoop.dao.FilmDAO;
 import be.bioscoop.dao.SocialDAO;
 import be.bioscoop.entities.Social;
-
-import org.apache.activemq.ActiveMQConnectionFactory;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
 import javax.jms.*;
-import javax.xml.XMLConstants;
-import javax.xml.validation.SchemaFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.sql.Date;
@@ -24,7 +21,7 @@ public class SocialReceiver
     public void receiveMessage() throws JMSException, JDOMException, IOException, SQLException
     {
         // Connecteren naar ActiveMQ
-        javax.jms.Connection amqConnection = new ActiveMQConnectionFactory("tcp://192.168.20.200:61616").createConnection();
+        javax.jms.Connection amqConnection = Queue.connect();
 
         // Connectie starten
         amqConnection.start();
@@ -46,14 +43,8 @@ public class SocialReceiver
         // Bericht toevoegen aan database
         addMessageToDatabase((TextMessage) message);
 
-        // Consumer sluiten
-        consumer.close();
-
-        // Sessie sluiten
-        session.close();
-
-        // Connectie sluiten
-        amqConnection.close();
+        // Sluit MessageConsumer, Session en Connection
+        Queue.close(session, consumer);
     }
 
     private void addMessageToDatabase(TextMessage textMessage) throws SQLException, JDOMException, IOException, JMSException

@@ -78,13 +78,13 @@ CREATE TABLE IF NOT EXISTS film (
   CONSTRAINT FK_Film_Restrictie
     FOREIGN KEY (restrictieId)
     REFERENCES restrictie (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT FK_Film_Genre
     FOREIGN KEY (genreId)
     REFERENCES genre (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -103,48 +103,13 @@ CREATE TABLE IF NOT EXISTS programmatie (
   CONSTRAINT FK_Programmatie_Zaal
     FOREIGN KEY (zaalId)
     REFERENCES zaal (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
   CONSTRAINT FK_Programmatie_Film
     FOREIGN KEY (filmId)
     REFERENCES film (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table barcode
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS barcode (
-  id INT NOT NULL AUTO_INCREMENT,
-  code VARCHAR(20) NOT NULL,
-  gebruikt BIT NOT NULL,
-  PRIMARY KEY (id))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table ticket
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS ticket (
-  id INT NOT NULL AUTO_INCREMENT,
-  prijs DECIMAL NOT NULL,
-  programmatieId INT NOT NULL,
-  barcodeId INT NOT NULL,
-  PRIMARY KEY (id),
-  INDEX FK_Ticket_Programmatie_idx (programmatieId ASC),
-  INDEX FK_Ticket_Barcode_idx (barcodeId ASC),
-  CONSTRAINT FK_Ticket_Programmatie
-    FOREIGN KEY (programmatieId)
-    REFERENCES programmatie (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT FK_Ticket_Barcode
-    FOREIGN KEY (barcodeId)
-    REFERENCES barcode (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -160,25 +125,44 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table bestelling
+-- Table ticket
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS bestelling (
+CREATE TABLE IF NOT EXISTS ticket (
   id INT NOT NULL AUTO_INCREMENT,
+  prijs DECIMAL NOT NULL,
   klantId INT NOT NULL,
-  ticketId INT NOT NULL,
+  programmatieId INT NOT NULL,
   PRIMARY KEY (id),
-  INDEX FK_Bestelling_Klant_idx (klantId ASC),
-  INDEX FK_Bestelling_Ticket_idx (ticketId ASC),
-  CONSTRAINT FK_Bestelling_Klant
+  INDEX FK_Ticket_Klant_idx (klantId ASC),
+  INDEX FK_Ticket_Programmatie_idx (programmatieId ASC),
+  CONSTRAINT FK_Ticket_Klant
     FOREIGN KEY (klantId)
     REFERENCES klant (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT FK_Bestelling_Ticket
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT FK_Ticket_Programmatie
+    FOREIGN KEY (programmatieId)
+    REFERENCES programmatie (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table barcode
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS barcode (
+  id INT NOT NULL AUTO_INCREMENT,
+  code VARCHAR(20) NOT NULL,
+  gebruikt BIT NOT NULL,
+  ticketId INT NOT NULL,
+  PRIMARY KEY (id),
+  INDEX FK_Barcode_Ticket_idx (ticketId ASC),
+  CONSTRAINT FK_Barcode_Ticket
     FOREIGN KEY (ticketId)
     REFERENCES ticket (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 

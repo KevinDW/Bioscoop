@@ -1,6 +1,6 @@
 package be.bioscoop.queues;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
+import be.bioscoop.config.Queue;
 
 import javax.jms.*;
 
@@ -9,7 +9,7 @@ public class SocialSender
     public void sendMessage(String message) throws JMSException
     {
         // Connecteren naar ActiveMQ
-        Connection connection = new ActiveMQConnectionFactory("tcp://192.168.20.200:61616").createConnection();
+        Connection connection = Queue.connect();
 
         // Connectie starten
         connection.start();
@@ -34,13 +34,7 @@ public class SocialSender
         // Bericht verzenden naar de queue
         producer.send(textMessage);
 
-        // Sluit producer
-        producer.close();
-
-        // Sluit sessie
-        session.close();
-
-        // Sluit connectie
-        connection.close();
+        // Sluit MessageProducer, Session en Connection
+        be.bioscoop.config.Queue.close(session, producer);
     }
 }

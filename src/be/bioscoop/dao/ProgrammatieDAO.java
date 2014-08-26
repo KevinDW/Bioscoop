@@ -117,7 +117,8 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
             "INNER JOIN zaal AS z ON p.zaalId = z.id " +
             "INNER JOIN bioscoop AS b ON z.bioscoopId = b.id " +
             "WHERE b.id = ? " +
-            "AND p.datum BETWEEN ? AND ?"
+            "AND p.datum BETWEEN ? AND ? " +
+            "ORDER BY p.datum, p.id"
         );
 
         statement.setInt(1, bioscoop);
