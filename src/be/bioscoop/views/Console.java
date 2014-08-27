@@ -61,7 +61,8 @@ public class Console
 
         System.out.println();
 
-        int bioscoop = 0;
+        System.out.print("Bioscoop (ID uit lijst): ");
+        int bioscoop = Integer.parseInt(scanner.nextLine());
 
         while (bioscoop == 0 || bioscoop > bioscoopDAO.lastId())
         {
@@ -137,7 +138,8 @@ public class Console
 
         System.out.println();
 
-        int film = 0;
+        System.out.print("Film (ID uit lijst): ");
+        int film = Integer.parseInt(scanner.nextLine());
 
         while (film == 0 || film > filmDAO.lastId())
         {
@@ -179,20 +181,26 @@ public class Console
         {
             Console console = new Console();
 
-            System.out.printf("Methode: ");
+            System.out.println("1 | Toon alle programmaties voor een bepaalde bioscoop tussen 2 datums");
+            System.out.println("2 | Voeg een sociaal bericht toe via DAO");
+            System.out.println("3 | Voeg gegenereerde sociale berichten toe via ActiveMQ");
+
+            System.out.println();
+
+            System.out.printf("Methode (0 om af te sluiten): ");
             int methode = Integer.parseInt(console.scanner.nextLine());
 
-            switch (methode)
+            System.out.println();
+
+            loop: while (true)
             {
-                case 1:
-                    console.programmatiesVoorBepaaldeBioscoopTussenTweeDatums();
-                    break;
-                case 2:
-                    console.socialeBerichtenViaDAO();
-                    break;
-                case 3:
-                    console.socialeBerichtenOpQueue();
-                    break;
+                switch (methode)
+                {
+                    case 1: console.programmatiesVoorBepaaldeBioscoopTussenTweeDatums(); break;
+                    case 2: console.socialeBerichtenViaDAO(); break;
+                    case 3: console.socialeBerichtenOpQueue(); break;
+                    default: System.out.println("Kan methode niet vinden."); break loop;
+                }
             }
 
             Database.close();
