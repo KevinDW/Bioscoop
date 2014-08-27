@@ -1,7 +1,10 @@
 package be.bioscoop.views;
 
 import be.bioscoop.config.Database;
-import be.bioscoop.dao.*;
+import be.bioscoop.dao.BioscoopDAO;
+import be.bioscoop.dao.FilmDAO;
+import be.bioscoop.dao.ProgrammatieDAO;
+import be.bioscoop.dao.SocialDAO;
 import be.bioscoop.entities.Bioscoop;
 import be.bioscoop.entities.Film;
 import be.bioscoop.entities.Programmatie;

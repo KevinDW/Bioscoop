@@ -1,7 +1,6 @@
 package be.bioscoop.dao;
 
 import be.bioscoop.entities.Barcode;
-import be.bioscoop.entities.Ticket;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
