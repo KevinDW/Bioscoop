@@ -13,11 +13,8 @@ public class Programmatie
 
     public Programmatie(int id, Date datum, Time beginUur, Zaal zaal, Film film)
     {
+        this(datum, beginUur, zaal, film);
         this.id = id;
-        this.datum = datum;
-        this.beginUur = beginUur;
-        this.zaal = zaal;
-        this.film = film;
     }
 
     public Programmatie(Date datum, Time beginUur, Zaal zaal, Film film)

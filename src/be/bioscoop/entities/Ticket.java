@@ -4,24 +4,21 @@ public class Ticket
 {
     private int id;
     private double prijs;
+    private Klant klant;
     private Programmatie programmatie;
-    private Barcode barcode;
 
-    public Ticket(int id, double prijs, Programmatie programmatie, Barcode barcode)
+    public Ticket(int id, double prijs, Klant klant, Programmatie programmatie)
     {
+        this(prijs, klant, programmatie);
         this.id = id;
-        this.prijs = prijs;
-        this.programmatie = programmatie;
-        this.barcode = barcode;
     }
 
-    public Ticket(double prijs, Programmatie programmatie, Barcode barcode)
+    public Ticket(double prijs, Klant klant, Programmatie programmatie)
     {
         this.prijs = prijs;
+        this.klant = klant;
         this.programmatie = programmatie;
-        this.barcode = barcode;
     }
-
 
     public int getId()
     {
@@ -43,6 +40,16 @@ public class Ticket
         this.prijs = prijs;
     }
 
+    public Klant getKlant()
+    {
+        return klant;
+    }
+
+    public void setKlant(Klant klant)
+    {
+        this.klant = klant;
+    }
+
     public Programmatie getProgrammatie()
     {
         return programmatie;
@@ -51,15 +58,5 @@ public class Ticket
     public void setProgrammatie(Programmatie programmatie)
     {
         this.programmatie = programmatie;
-    }
-
-    public Barcode getBarcode()
-    {
-        return barcode;
-    }
-
-    public void setBarcode(Barcode barcode)
-    {
-        this.barcode = barcode;
     }
 }

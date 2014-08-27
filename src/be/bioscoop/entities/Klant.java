@@ -8,9 +8,8 @@ public class Klant
 
     public Klant(int id, String naam, String email)
     {
+        this(naam, email);
         this.id = id;
-        this.naam = naam;
-        this.email = email;
     }
 
     public Klant(String naam, String email)

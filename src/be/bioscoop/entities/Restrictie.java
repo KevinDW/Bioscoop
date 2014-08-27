@@ -7,8 +7,8 @@ public class Restrictie
 
     public Restrictie(int id, String naam)
     {
+        this(naam);
         this.id = id;
-        this.naam = naam;
     }
 
     public Restrictie(String naam)

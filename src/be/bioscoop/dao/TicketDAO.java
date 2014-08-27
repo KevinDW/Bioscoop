@@ -21,7 +21,7 @@ public class TicketDAO implements DAOInterface<Ticket>
     public List<Ticket> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, prijs, programmatieId, barcodeId " +
+            "SELECT id, prijs, klantId, programmatieId " +
             "FROM ticket " +
             "ORDER BY id"
         );
@@ -35,8 +35,8 @@ public class TicketDAO implements DAOInterface<Ticket>
                 new Ticket(
                     resultSet.getInt(1),
                     resultSet.getDouble(2),
-                    new ProgrammatieDAO(this.connection).find(resultSet.getInt(3)),
-                    new BarcodeDAO(this.connection).find(resultSet.getInt(4))
+                    new KlantDAO(this.connection).find(resultSet.getInt(3)),
+                    new ProgrammatieDAO(this.connection).find(resultSet.getInt(4))
                 )
             );
         }
@@ -47,7 +47,7 @@ public class TicketDAO implements DAOInterface<Ticket>
     public Ticket find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, prijs, programmatieId, barcodeId " +
+            "SELECT id, prijs, klantId, programmatieId " +
             "FROM ticket " +
             "WHERE id = ?"
         );
@@ -60,21 +60,21 @@ public class TicketDAO implements DAOInterface<Ticket>
         return new Ticket(
             resultSet.getInt(1),
             resultSet.getDouble(2),
-            new ProgrammatieDAO(this.connection).find(resultSet.getInt(3)),
-            new BarcodeDAO(this.connection).find(resultSet.getInt(4))
+            new KlantDAO(this.connection).find(resultSet.getInt(3)),
+            new ProgrammatieDAO(this.connection).find(resultSet.getInt(4))
         );
     }
 
     public boolean insert(Ticket ticket) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "INSERT INTO ticket (prijs, programmatieId, barcodeId) " +
+            "INSERT INTO ticket (prijs, klantId, programmatieId) " +
             "VALUES (?, ?, ?)"
         );
 
         statement.setDouble(1, ticket.getPrijs());
-        statement.setInt(2, ticket.getProgrammatie().getId());
-        statement.setInt(3, ticket.getBarcode().getId());
+        statement.setInt(2, ticket.getKlant().getId());
+        statement.setInt(3, ticket.getProgrammatie().getId());
 
         return statement.execute();
     }
@@ -83,13 +83,13 @@ public class TicketDAO implements DAOInterface<Ticket>
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "UPDATE ticket " +
-            "SET prijs = ?, programmatieId = ?, barcodeId = ? " +
+            "SET prijs = ?, klantId = ?, programmatieId = ? " +
             "WHERE id = ?"
         );
 
         statement.setDouble(1, ticket.getPrijs());
-        statement.setInt(2, ticket.getProgrammatie().getId());
-        statement.setInt(3, ticket.getBarcode().getId());
+        statement.setInt(2, ticket.getKlant().getId());
+        statement.setInt(3, ticket.getProgrammatie().getId());
         statement.setInt(4, ticket.getId());
 
         return statement.execute();

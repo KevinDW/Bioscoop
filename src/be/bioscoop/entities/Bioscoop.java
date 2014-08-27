@@ -10,11 +10,8 @@ public class Bioscoop
 
     public Bioscoop(int id, String naam, String straat, String postcode, String gemeente)
     {
+        this(naam, straat, postcode, gemeente);
         this.id = id;
-        this.naam = naam;
-        this.straat = straat;
-        this.postcode = postcode;
-        this.gemeente = gemeente;
     }
 
     public Bioscoop(String naam, String straat, String postcode, String gemeente)

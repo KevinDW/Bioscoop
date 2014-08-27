@@ -7,8 +7,8 @@ public class Genre
 
     public Genre(int id, String naam)
     {
+        this(naam);
         this.id = id;
-        this.naam = naam;
     }
 
     public Genre(String naam)

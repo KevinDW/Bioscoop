@@ -1,6 +1,7 @@
 package be.bioscoop.dao;
 
 import be.bioscoop.entities.Barcode;
+import be.bioscoop.entities.Ticket;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +22,7 @@ public class BarcodeDAO implements DAOInterface<Barcode>
     public List<Barcode> all() throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, code, gebruikt " +
+            "SELECT id, code, gebruikt, ticketId " +
             "FROM barcode " +
             "ORDER BY code"
         );
@@ -35,7 +36,8 @@ public class BarcodeDAO implements DAOInterface<Barcode>
                 new Barcode(
                     resultSet.getInt(1),
                     resultSet.getString(2),
-                    resultSet.getBoolean(3)
+                    resultSet.getBoolean(3),
+                    new TicketDAO(this.connection).find(resultSet.getInt(4))
                 )
             );
         }
@@ -46,7 +48,7 @@ public class BarcodeDAO implements DAOInterface<Barcode>
     public Barcode find(int id) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
-            "SELECT id, code, gebruikt " +
+            "SELECT id, code, gebruikt, ticketId " +
             "FROM barcode " +
             "WHERE id = ?"
         );
@@ -59,7 +61,8 @@ public class BarcodeDAO implements DAOInterface<Barcode>
         return new Barcode(
             resultSet.getInt(1),
             resultSet.getString(2),
-            resultSet.getBoolean(3)
+            resultSet.getBoolean(3),
+            new TicketDAO(this.connection).find(resultSet.getInt(4))
         );
     }
 
@@ -80,13 +83,14 @@ public class BarcodeDAO implements DAOInterface<Barcode>
     {
         PreparedStatement statement = this.connection.prepareStatement(
             "UPDATE barcode " +
-            "SET code = ?, gebruikt = ? " +
+            "SET code = ?, gebruikt = ?, ticketId = ? " +
             "WHERE id = ?"
         );
 
         statement.setString(1, barcode.getCode());
         statement.setBoolean(2, barcode.isGebruikt());
-        statement.setInt(3, barcode.getId());
+        statement.setInt(3, barcode.getTicket().getId());
+        statement.setInt(4, barcode.getId());
 
         return statement.execute();
     }

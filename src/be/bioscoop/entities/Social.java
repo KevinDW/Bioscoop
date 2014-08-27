@@ -12,11 +12,8 @@ public class Social
 
     public Social(int id, Date datum, String type, String bericht, Film film)
     {
+        this(datum, type, bericht, film);
         this.id = id;
-        this.datum = datum;
-        this.type = type;
-        this.bericht = bericht;
-        this.film = film;
     }
 
     public Social(Date datum, String type, String bericht, Film film)

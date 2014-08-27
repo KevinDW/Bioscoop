@@ -5,18 +5,19 @@ public class Barcode
     private int id;
     private String code;
     private boolean gebruikt;
+    private Ticket ticket;
 
-    public Barcode(int id, String code, boolean gebruikt)
+    public Barcode(int id, String code, boolean gebruikt, Ticket ticket)
     {
+        this(code, gebruikt, ticket);
         this.id = id;
-        this.code = code;
-        this.gebruikt = gebruikt;
     }
 
-    public Barcode(String code, boolean gebruikt)
+    public Barcode(String code, boolean gebruikt, Ticket ticket)
     {
         this.code = code;
         this.gebruikt = gebruikt;
+        this.ticket = ticket;
     }
 
     public int getId()
@@ -47,5 +48,15 @@ public class Barcode
     public void setGebruikt(boolean gebruikt)
     {
         this.gebruikt = gebruikt;
+    }
+
+    public Ticket getTicket()
+    {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket)
+    {
+        this.ticket = ticket;
     }
 }

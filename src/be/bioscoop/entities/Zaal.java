@@ -12,13 +12,8 @@ public class Zaal
 
     public Zaal(int id, int zaalNr, int capaciteit, int maxRij, int maxKolom, int verdieping, Bioscoop bioscoop)
     {
+        this(zaalNr, capaciteit, maxRij, maxKolom, verdieping, bioscoop);
         this.id = id;
-        this.zaalNr = zaalNr;
-        this.capaciteit = capaciteit;
-        this.maxRij = maxRij;
-        this.maxKolom = maxKolom;
-        this.verdieping = verdieping;
-        this.bioscoop = bioscoop;
     }
 
     public Zaal(int zaalNr, int capaciteit, int maxRij, int maxKolom, int verdieping, Bioscoop bioscoop)
