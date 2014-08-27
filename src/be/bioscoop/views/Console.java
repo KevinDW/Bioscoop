@@ -102,6 +102,8 @@ public class Console
             System.out.printf("%-7d | ", programmatie.getZaal().getZaalNr());
             System.out.printf("%s \n", programmatie.getFilm().getNaam());
         }
+
+        System.out.println();
     }
 
     private void socialeBerichtenViaDAO() throws SQLException
@@ -181,21 +183,22 @@ public class Console
         {
             Console console = new Console();
 
-            System.out.println("1 | Toon alle programmaties voor een bepaalde bioscoop tussen 2 datums");
-            System.out.println("2 | Voeg een sociaal bericht toe via DAO");
-            System.out.println("3 | Voeg gegenereerde sociale berichten toe via ActiveMQ");
-
-            System.out.println();
-
-            System.out.printf("Methode (0 om af te sluiten): ");
-            int methode = Integer.parseInt(console.scanner.nextLine());
-
-            System.out.println();
-
             loop: while (true)
             {
+                System.out.println("1 | Toon alle programmaties voor een bepaalde bioscoop tussen 2 datums");
+                System.out.println("2 | Voeg een sociaal bericht toe via DAO");
+                System.out.println("3 | Voeg gegenereerde sociale berichten toe via ActiveMQ");
+
+                System.out.println();
+
+                System.out.printf("Methode (0 om af te sluiten): ");
+                int methode = Integer.parseInt(console.scanner.nextLine());
+
+                System.out.println();
+
                 switch (methode)
                 {
+                    case 0: break loop;
                     case 1: console.programmatiesVoorBepaaldeBioscoopTussenTweeDatums(); break;
                     case 2: console.socialeBerichtenViaDAO(); break;
                     case 3: console.socialeBerichtenOpQueue(); break;
