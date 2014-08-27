@@ -71,6 +71,67 @@ public class ZaalDAO implements DAOInterface<Zaal>
         );
     }
 
+    public Zaal first() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, zaalnr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId " +
+            "FROM zaal " +
+            "ORDER BY id ASC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Zaal(
+            resultSet.getInt(1),
+            resultSet.getInt(2),
+            resultSet.getInt(3),
+            resultSet.getInt(4),
+            resultSet.getInt(5),
+            resultSet.getInt(6),
+            new BioscoopDAO(this.connection).find(resultSet.getInt(7))
+        );
+    }
+
+    public Zaal last() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, zaalnr, capaciteit, maxRij, maxKolom, verdieping, bioscoopId " +
+            "FROM zaal " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Zaal(
+            resultSet.getInt(1),
+            resultSet.getInt(2),
+            resultSet.getInt(3),
+            resultSet.getInt(4),
+            resultSet.getInt(5),
+            resultSet.getInt(6),
+            new BioscoopDAO(this.connection).find(resultSet.getInt(7))
+        );
+    }
+
+    public int lastId() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id " +
+            "FROM zaal " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return resultSet.getInt(1);
+    }
+
     public boolean insert(Zaal zaal) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(

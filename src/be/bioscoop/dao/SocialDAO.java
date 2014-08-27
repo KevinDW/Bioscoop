@@ -67,6 +67,63 @@ public class SocialDAO implements DAOInterface<Social>
         );
     }
 
+    public Social first() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, datum, type, bericht, filmId " +
+            "FROM social " +
+            "ORDER BY id ASC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Social(
+            resultSet.getInt(1),
+            resultSet.getDate(2),
+            resultSet.getString(3),
+            resultSet.getString(4),
+            new FilmDAO(this.connection).find(resultSet.getInt(5))
+        );
+    }
+
+    public Social last() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, datum, type, bericht, filmId " +
+            "FROM social " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Social(
+            resultSet.getInt(1),
+            resultSet.getDate(2),
+            resultSet.getString(3),
+            resultSet.getString(4),
+            new FilmDAO(this.connection).find(resultSet.getInt(5))
+        );
+    }
+
+    public int lastId() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id " +
+            "FROM social " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return resultSet.getInt(1);
+    }
+
     public boolean insert(Social social) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(

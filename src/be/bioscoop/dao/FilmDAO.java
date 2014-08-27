@@ -73,6 +73,69 @@ public class FilmDAO implements DAOInterface<Film>
         );
     }
 
+    public Film first() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam, code, jaar, duur, beoordeling, genreId, restrictieId " +
+            "FROM film " +
+            "ORDER BY id ASC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Film(
+            resultSet.getInt(1),
+            resultSet.getString(2),
+            resultSet.getString(3),
+            resultSet.getInt(4),
+            resultSet.getInt(5),
+            resultSet.getDouble(6),
+            new RestrictieDAO(this.connection).find(resultSet.getInt(7)),
+            new GenreDAO(this.connection).find(resultSet.getInt(8))
+        );
+    }
+
+    public Film last() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam, code, jaar, duur, beoordeling, genreId, restrictieId " +
+            "FROM film " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Film(
+            resultSet.getInt(1),
+            resultSet.getString(2),
+            resultSet.getString(3),
+            resultSet.getInt(4),
+            resultSet.getInt(5),
+            resultSet.getDouble(6),
+            new RestrictieDAO(this.connection).find(resultSet.getInt(7)),
+            new GenreDAO(this.connection).find(resultSet.getInt(8))
+        );
+    }
+
+    public int lastId() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id " +
+            "FROM film " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return resultSet.getInt(1);
+    }
+
     public boolean insert(Film film) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(

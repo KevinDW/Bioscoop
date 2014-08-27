@@ -66,6 +66,61 @@ public class BarcodeDAO implements DAOInterface<Barcode>
         );
     }
 
+    public Barcode first() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, code, gebruikt, ticketId " +
+            "FROM barcode " +
+            "ORDER BY id ASC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Barcode(
+            resultSet.getInt(1),
+            resultSet.getString(2),
+            resultSet.getBoolean(3),
+            new TicketDAO(this.connection).find(resultSet.getInt(4))
+        );
+    }
+
+    public Barcode last() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, code, gebruikt, ticketId " +
+            "FROM barcode " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Barcode(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getBoolean(3),
+                new TicketDAO(this.connection).find(resultSet.getInt(4))
+        );
+    }
+
+    public int lastId() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id " +
+            "FROM barcode " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return resultSet.getInt(1);
+    }
+
     public boolean insert(Barcode barcode) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(

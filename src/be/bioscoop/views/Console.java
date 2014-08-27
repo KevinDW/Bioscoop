@@ -1,10 +1,7 @@
 package be.bioscoop.views;
 
 import be.bioscoop.config.Database;
-import be.bioscoop.dao.BioscoopDAO;
-import be.bioscoop.dao.FilmDAO;
-import be.bioscoop.dao.ProgrammatieDAO;
-import be.bioscoop.dao.SocialDAO;
+import be.bioscoop.dao.*;
 import be.bioscoop.entities.Bioscoop;
 import be.bioscoop.entities.Film;
 import be.bioscoop.entities.Programmatie;
@@ -61,8 +58,14 @@ public class Console
 
         System.out.println();
 
-        System.out.print("Bioscoop (ID uit lijst): ");
-        int bioscoop = Integer.parseInt(scanner.nextLine());
+        int bioscoop = 0;
+
+        while (bioscoop == 0 || bioscoop > bioscoopDAO.lastId())
+        {
+            System.out.println("Kan ID niet vinden.");
+            System.out.print("Bioscoop (ID uit lijst): ");
+            bioscoop = Integer.parseInt(scanner.nextLine());
+        }
 
         System.out.print("Begindatum (yyyy-mm-dd): ");
         Date beginDatum = Date.valueOf(scanner.nextLine());
@@ -131,8 +134,14 @@ public class Console
 
         System.out.println();
 
-        System.out.print("Film (ID uit lijst): ");
-        int film = Integer.parseInt(scanner.nextLine());
+        int film = 0;
+
+        while (film == 0 || film > filmDAO.lastId())
+        {
+            System.out.println("Kan ID niet vinden.");
+            System.out.print("Film (ID uit lijst): ");
+            film = Integer.parseInt(scanner.nextLine());
+        }
 
         System.out.print("Datum bericht: ");
         Date datum = Date.valueOf(scanner.nextLine());

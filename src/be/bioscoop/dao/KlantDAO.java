@@ -63,6 +63,59 @@ public class KlantDAO implements DAOInterface<Klant>
         );
     }
 
+    public Klant first() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam, email " +
+            "FROM klant " +
+            "ORDER BY id ASC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Klant(
+            resultSet.getInt(1),
+            resultSet.getString(2),
+            resultSet.getString(3)
+        );
+    }
+
+    public Klant last() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam, email " +
+            "FROM klant " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Klant(
+            resultSet.getInt(1),
+            resultSet.getString(2),
+            resultSet.getString(3)
+        );
+    }
+
+    public int lastId() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id " +
+            "FROM klant " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return resultSet.getInt(1);
+    }
+
     public boolean insert(Klant klant) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(

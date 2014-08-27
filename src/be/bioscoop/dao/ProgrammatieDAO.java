@@ -64,6 +64,63 @@ public class ProgrammatieDAO implements DAOInterface<Programmatie>
         );
     }
 
+    public Programmatie first() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, datum, beginuur, zaalId, filmId " +
+            "FROM programmatie " +
+            "ORDER BY id ASC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Programmatie(
+            resultSet.getInt(1),
+            resultSet.getDate(2),
+            resultSet.getTime(3),
+            new ZaalDAO(this.connection).find(resultSet.getInt(4)),
+            new FilmDAO(this.connection).find(resultSet.getInt(5))
+        );
+    }
+
+    public Programmatie last() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, datum, beginuur, zaalId, filmId " +
+            "FROM programmatie " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Programmatie(
+            resultSet.getInt(1),
+            resultSet.getDate(2),
+            resultSet.getTime(3),
+            new ZaalDAO(this.connection).find(resultSet.getInt(4)),
+            new FilmDAO(this.connection).find(resultSet.getInt(5))
+        );
+    }
+
+    public int lastId() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id " +
+            "FROM programmatie " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return resultSet.getInt(1);
+    }
+
     public boolean insert(Programmatie programmatie) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(

@@ -65,6 +65,61 @@ public class TicketDAO implements DAOInterface<Ticket>
         );
     }
 
+    public Ticket first() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, prijs, klantId, programmatieId " +
+            "FROM ticket " +
+            "ORDER BY id ASC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Ticket(
+            resultSet.getInt(1),
+            resultSet.getDouble(2),
+            new KlantDAO(this.connection).find(resultSet.getInt(3)),
+            new ProgrammatieDAO(this.connection).find(resultSet.getInt(4))
+        );
+    }
+
+    public Ticket last() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, prijs, klantId, programmatieId " +
+            "FROM ticket " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Ticket(
+            resultSet.getInt(1),
+            resultSet.getDouble(2),
+            new KlantDAO(this.connection).find(resultSet.getInt(3)),
+            new ProgrammatieDAO(this.connection).find(resultSet.getInt(4))
+        );
+    }
+
+    public int lastId() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id " +
+            "FROM ticket " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return resultSet.getInt(1);
+    }
+
     public boolean insert(Ticket ticket) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
@@ -88,8 +143,8 @@ public class TicketDAO implements DAOInterface<Ticket>
         );
 
         statement.setDouble(1, ticket.getPrijs());
-        statement.setInt(2, ticket.getKlant().getId());
-        statement.setInt(3, ticket.getProgrammatie().getId());
+        statement.setInt(2, ticket.getProgrammatie().getId());
+        statement.setInt(3, ticket.getKlant().getId());
         statement.setInt(4, ticket.getId());
 
         return statement.execute();

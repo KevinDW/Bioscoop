@@ -61,6 +61,57 @@ public class GenreDAO implements DAOInterface<Genre>
         );
     }
 
+    public Genre first() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam " +
+            "FROM genre " +
+            "ORDER BY id ASC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Genre(
+                resultSet.getInt(1),
+                resultSet.getString(2)
+        );
+    }
+
+    public Genre last() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id, naam " +
+            "FROM genre " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return new Genre(
+                resultSet.getInt(1),
+                resultSet.getString(2)
+        );
+    }
+
+    public int lastId() throws SQLException
+    {
+        PreparedStatement statement = this.connection.prepareStatement(
+            "SELECT id " +
+            "FROM genre " +
+            "ORDER BY id DESC " +
+            "LIMIT 1"
+        );
+
+        ResultSet resultSet = statement.executeQuery();
+        resultSet.first();
+
+        return resultSet.getInt(1);
+    }
+
     public boolean insert(Genre genre) throws SQLException
     {
         PreparedStatement statement = this.connection.prepareStatement(
